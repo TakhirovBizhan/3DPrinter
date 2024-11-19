@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
-import CounterMain from '../components/CounterMain.vue'
+import PrinterCard from '../components/Atoms/PrinterCard.vue';
 </script>
 
 <template>
   <main>
-    <TheWelcome />
-    <CounterMain />
+    <PrinterCard/>
   </main>
 </template>
