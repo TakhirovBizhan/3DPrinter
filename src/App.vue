@@ -10,7 +10,7 @@ const handleSelect = (key: string, keyPath: string[]) => {
 </script>
 
 <template>
-  <header>
+  <header class="header">
       <nav>
         <el-menu
     :default-active="activeIndex"
@@ -31,8 +31,11 @@ const handleSelect = (key: string, keyPath: string[]) => {
 </template>
 
 <style>
-.el-menu--horizontal > .el-menu-item:nth-child(1) {
-  margin-right: auto;
+
+.el-menu-demo {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 a {
   text-decoration:none;
@@ -41,6 +44,15 @@ a {
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 </style>

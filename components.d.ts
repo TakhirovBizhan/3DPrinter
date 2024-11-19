@@ -16,5 +16,6 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheWelcome: typeof import('./src/components/Atoms/TheWelcome.vue')['default']
+    ThreadLengthInput: typeof import('./src/components/Atoms/ThreadLengthInput.vue')['default']
   }
 }
