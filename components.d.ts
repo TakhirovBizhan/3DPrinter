@@ -12,9 +12,11 @@ declare module 'vue' {
     ElCard: typeof import('element-plus/es')['ElCard']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    Header: typeof import('./src/components/Organisms/Header.vue')['default']
     PrinterCard: typeof import('./src/components/Atoms/PrinterCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TheHeader: typeof import('./src/components/Organisms/TheHeader.vue')['default']
     TheWelcome: typeof import('./src/components/Atoms/TheWelcome.vue')['default']
     ThreadLengthInput: typeof import('./src/components/Atoms/ThreadLengthInput.vue')['default']
   }
