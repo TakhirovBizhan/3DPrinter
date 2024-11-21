@@ -6,6 +6,6 @@ import CoilCard  from '../components/Atoms/CoilCard.vue';
 <template>
   <main>
     <h2>Plastics</h2>
-    <CoilCard color="red" />
+    <CoilCard color="blue" />
   </main>
 </template>
