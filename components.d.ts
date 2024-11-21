@@ -16,6 +16,7 @@ declare module 'vue' {
     PrinterCard: typeof import('./src/components/Atoms/PrinterCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TheFooter: typeof import('./src/components/Organisms/TheFooter.vue')['default']
     TheHeader: typeof import('./src/components/Organisms/TheHeader.vue')['default']
     TheWelcome: typeof import('./src/components/Atoms/TheWelcome.vue')['default']
     ThreadLengthInput: typeof import('./src/components/Atoms/ThreadLengthInput.vue')['default']
