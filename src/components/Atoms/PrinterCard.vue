@@ -6,7 +6,8 @@ defineProps({
   name: String,
   plasticCoil: String,
   isPrintStarted: Boolean,
-  printingSpeed: Number
+  printingSpeed: Number,
+  modelQueue: []
 });
 
 

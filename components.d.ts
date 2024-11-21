@@ -7,6 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    CoilCard: typeof import('./src/components/Atoms/CoilCard.vue')['default']
     CounterMain: typeof import('./src/components/CounterMain.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
@@ -19,6 +20,7 @@ declare module 'vue' {
     TheFooter: typeof import('./src/components/Organisms/TheFooter.vue')['default']
     TheHeader: typeof import('./src/components/Organisms/TheHeader.vue')['default']
     TheWelcome: typeof import('./src/components/Atoms/TheWelcome.vue')['default']
+    ThreadCard: typeof import('./src/components/Atoms/ThreadCard.vue')['default']
     ThreadLengthInput: typeof import('./src/components/Atoms/ThreadLengthInput.vue')['default']
   }
 }
