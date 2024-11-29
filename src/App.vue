@@ -22,14 +22,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-
-main {
-  max-width: 1440px;
-  margin: auto;
-  margin-top: 30px;
-  min-height: 80vh;
-}
-
 * {
   box-sizing: border-box;
 }

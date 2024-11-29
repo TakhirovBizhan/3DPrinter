@@ -2,7 +2,7 @@ export interface IPlasticCoil {
     material: string,
     color: string,
     threadLength: number;
-    cutThread(newLength: number): void;
+    lengthToCut: number;
 }
 
 export interface IFigure {
