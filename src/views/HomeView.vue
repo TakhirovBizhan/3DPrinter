@@ -1,20 +1,15 @@
 <script setup lang="ts">
 import CoilList from '@/components/Organisms/CoilList.vue';
-import PrinterCard from '../components/Atoms/PrinterCard.vue';
 import PrinterList from '@/components/Organisms/PrinterList.vue';
+import ModelList from '@/components/Organisms/ModelList.vue';
 </script>
 
 <template>
   <main>
     <div class="wrapper">
       <PrinterList />
-      <div>
         <CoilList />
-      </div>
-      <div>
-        <h2>Models</h2>
-        <PrinterCard/>
-      </div>
+        <ModelList />
   </div>
   </main>
 </template>
