@@ -1,19 +1,20 @@
-<script setup lang="ts">
-import ModelCard from '../Atoms/ModelCard.vue';
+ 
+ <script setup lang="ts">
+import PrinterCard from '../PrintersComponents/PrinterCard.vue';
  
  </script>
     <template>
         <div>
-            <h2>Coils</h2>
+            <h2>Printers</h2>
           <el-carousel class="carousel" indicator-position="none" :autoplay="false" trigger="click" arrows="always">
             <el-carousel-item class="content">
-                <ModelCard/>
+                <PrinterCard/>
             </el-carousel-item>
             <el-carousel-item class="content">
-                <ModelCard color="red"/>
+                <PrinterCard/>
             </el-carousel-item>
             <el-carousel-item class="content">
-                <ModelCard color="blue"/>
+                <PrinterCard :is-print-started="true"/>
             </el-carousel-item>
           </el-carousel>
         </div>

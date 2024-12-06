@@ -7,8 +7,8 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    CoilCard: typeof import('./src/components/Atoms/CoilCard.vue')['default']
-    CoilForm: typeof import('./src/components/Organisms/CoilForm.vue')['default']
+    CoilCard: typeof import('./src/components/PlasticComponents/CoilCard.vue')['default']
+    CoilForm: typeof import('./src/components/PlasticComponents/CoilForm.vue')['default']
     CoilList: typeof import('./src/components/Organisms/CoilList.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
@@ -20,14 +20,14 @@ declare module 'vue' {
     ElInputNumber: typeof import('element-plus/es')['ElInputNumber']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
-    ModelCard: typeof import('./src/components/Atoms/ModelCard.vue')['default']
+    ModelCard: typeof import('./src/components/ModelsComponents/ModelCard.vue')['default']
     ModelList: typeof import('./src/components/Organisms/ModelList.vue')['default']
-    PrinterCard: typeof import('./src/components/Atoms/PrinterCard.vue')['default']
+    PrinterCard: typeof import('./src/components/PrintersComponents/PrinterCard.vue')['default']
     PrinterList: typeof import('./src/components/Organisms/PrinterList.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TheFooter: typeof import('./src/components/Organisms/TheFooter.vue')['default']
-    TheHeader: typeof import('./src/components/Organisms/TheHeader.vue')['default']
-    ThreadLengthInput: typeof import('./src/components/Atoms/ThreadLengthInput.vue')['default']
+    TheFooter: typeof import('./src/components/TheFooter.vue')['default']
+    TheHeader: typeof import('./src/components/TheHeader.vue')['default']
+    ThreadLengthInput: typeof import('./src/components/PlasticComponents/ThreadLengthInput.vue')['default']
   }
 }

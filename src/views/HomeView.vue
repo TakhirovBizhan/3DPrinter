@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import CoilList from '@/components/Organisms/CoilList.vue';
-import PrinterList from '@/components/Organisms/PrinterList.vue';
-import ModelList from '@/components/Organisms/ModelList.vue';
+import CoilList from '@/components/PlasticComponents/CoilList.vue';
+import PrinterList from '@/components/PrintersComponents/PrinterList.vue';
+import ModelList from '@/components/ModelsComponents/ModelList.vue';
 </script>
 
 <template>

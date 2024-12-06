@@ -1,5 +1,5 @@
  <script setup lang="ts">
- import CoilCard from '../Atoms/CoilCard.vue';
+ import CoilCard from '../PlasticComponents/CoilCard.vue';
   
   </script>
      <template>

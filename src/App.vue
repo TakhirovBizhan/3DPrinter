@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
-import TheFooter from './components/Organisms/TheFooter.vue';
-import TheHeader from './components/Organisms/TheHeader.vue';
+import TheFooter from './components/TheFooter.vue';
+import TheHeader from './components/TheHeader.vue';
 
 </script>
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import CoilForm from '@/components/Organisms/CoilForm.vue';
-import CoilList from '@/components/Organisms/CoilList.vue';
+import CoilForm from '@/components/PlasticComponents/CoilForm.vue';
+import CoilList from '@/components/PlasticComponents/CoilList.vue';
 
 </script>
 
