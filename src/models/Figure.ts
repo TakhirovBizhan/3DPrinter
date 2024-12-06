@@ -1,6 +1,9 @@
-import type { IFigure } from "./dataInterfaces";
 
-export class Figure implements IFigure {
+import { v4 as uuidv4 } from 'uuid';
+
+
+export class Figure {
+    private readonly id: string = uuidv4();
     constructor(
         public modelName: string,
         public perimetr: number,

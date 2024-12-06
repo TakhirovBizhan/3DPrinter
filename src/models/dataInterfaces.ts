@@ -6,12 +6,14 @@ export interface IPlasticCoil {
 }
 
 export interface IFigure {
+    readonly id: string;
     modelName: string,
     perimetr: number,
     creatingTime: number;
 }
 
 export interface IPrinter {
+    id: string;
     isPrintStarted: boolean;
     mark: string;
     articule: string;

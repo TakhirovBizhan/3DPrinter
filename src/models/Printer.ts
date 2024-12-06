@@ -1,7 +1,9 @@
-import { PrintingError, type IFigure, type IPlasticCoil, type IPrinter } from "./dataInterfaces";
+import { PrintingError, type IFigure, type IPlasticCoil } from "./dataInterfaces";
+import { v4 as uuidv4 } from 'uuid';
 
-export class Printer implements IPrinter {
-    isPrintStarted = false;
+export class Printer {
+    private readonly id: string;
+    private isPrintStarted = false;
     mark: string;
     articule: string;
     plasticCoil: IPlasticCoil | null;
@@ -14,6 +16,7 @@ export class Printer implements IPrinter {
         articule: string,
         printingSpeed: number,
     ) {
+        this.id = uuidv4()
         this.mark = mark;
         this.articule = articule;
         this.plasticCoil = null;

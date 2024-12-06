@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ModelCard from '../ModelsComponents/ModelCard.vue';
+import ModelCard from '../FigureComponents/ModelCard.vue';
  
  </script>
     <template>
