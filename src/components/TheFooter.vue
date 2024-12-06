@@ -10,6 +10,5 @@ footer {
     border-top: 1px solid rgb(156, 156, 156);
     display: flex;
     justify-content: center;
-    bottom: 0;
 }
 </style>

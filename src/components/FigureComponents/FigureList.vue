@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import ModelCard from '../FigureComponents/ModelCard.vue';
+import ModelCard from './FigureCard.vue';
  
  </script>
     <template>
         <div>
-            <h2>Coils</h2>
-          <el-carousel class="carousel" indicator-position="none" :autoplay="false" trigger="click" arrows="always">
+          <el-carousel class="carousel" indicator-position="true" :autoplay="false" trigger="click" arrows="always">
             <el-carousel-item class="content">
                 <ModelCard/>
             </el-carousel-item>

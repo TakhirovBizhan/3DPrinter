@@ -1,22 +1,21 @@
 <script setup lang="ts">
 import CoilList from '@/components/PlasticComponents/CoilList.vue';
 import PrinterList from '@/components/PrintersComponents/PrinterList.vue';
-import ModelList from '@/components/FigureComponents/ModelList.vue';
+import ModelList from '@/components/FigureComponents/FigureList.vue';
 </script>
 
 <template>
   <main>
-    <div class="wrapper">
       <PrinterList />
         <CoilList />
         <ModelList />
-  </div>
   </main>
 </template>
 
 <style>
 
-.wrapper {
+main {
+  min-height: 81.5vh;
   max-width: 1440px;
   margin: auto;
   margin-top: 30px;
@@ -26,8 +25,9 @@ import ModelList from '@/components/FigureComponents/ModelList.vue';
   gap: 50px;
 }
 
+
 body {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(43, 43, 43);
 }
 
 

@@ -6,7 +6,6 @@ export interface IPlasticCoil {
 }
 
 export interface IFigure {
-    readonly id: string;
     modelName: string,
     perimetr: number,
     creatingTime: number;

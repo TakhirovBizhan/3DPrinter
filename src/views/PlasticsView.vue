@@ -28,7 +28,6 @@ import CoilList from '@/components/PlasticComponents/CoilList.vue';
   padding: 20px;
   border: 1px solid rgb(0, 0, 0);
   border-radius: 20px;
-  background-color: rgb(118, 210, 118);
   height: fit-content;
 }
 

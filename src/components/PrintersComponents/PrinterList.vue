@@ -5,8 +5,7 @@ import PrinterCard from '../PrintersComponents/PrinterCard.vue';
  </script>
     <template>
         <div>
-            <h2>Printers</h2>
-          <el-carousel class="carousel" indicator-position="none" :autoplay="false" trigger="click" arrows="always">
+          <el-carousel class="carousel" indicator-position="true" :autoplay="false" trigger="click" arrows="always">
             <el-carousel-item class="content">
                 <PrinterCard/>
             </el-carousel-item>
