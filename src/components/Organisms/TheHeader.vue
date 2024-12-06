@@ -2,7 +2,7 @@
 
 import { ref } from 'vue'
 
-const activeIndex = ref()
+const activeIndex = ref('')
 const handleSelect = (key: string) => {
   activeIndex.value = key;
 }
@@ -36,12 +36,26 @@ const handleSelect = (key: string) => {
   display: flex;
   justify-content: center;
   gap: 20px;
+  background-color: black;
 }
 
 .header {
   position: sticky;
   top: 0;
+  z-index: 9999;
+  background-color: black;
 }
 
+.el-menu-item {
+  color: white;
+}
+
+.el-menu-item:hover {
+  background-color: black !important;
+}
+
+.el-menu-item:active, .el-menu-item:focus {
+  background-color: black !important;
+}
 
 </style>

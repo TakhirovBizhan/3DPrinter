@@ -9,7 +9,7 @@ defineProps({
 </script>
 
 <template>
-  <el-card style="max-width: 350px">
+  <el-card class="card">
     <template #header>
       <h4>Material: {{ material }}</h4>
     </template>
@@ -28,6 +28,10 @@ defineProps({
 </template>
 
 <style lang="css" scoped>
+
+.card {
+  max-width: 350px;
+}
 h4 {
   margin-bottom: 3px;
   margin-top: 3px;

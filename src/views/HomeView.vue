@@ -27,7 +27,7 @@ import ModelList from '@/components/Organisms/ModelList.vue';
 }
 
 body {
-  background-color: rgb(204, 226, 205);
+  background-color: rgb(255, 255, 255);
 }
 
 
