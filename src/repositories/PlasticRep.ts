@@ -1,21 +1,25 @@
 import { useFetch } from "@/hooks/useFetch";
-import type { IFigure } from "@/models/dataInterfaces";
-import { Figure } from "@/models/Figure";
+import { PlasticCoil } from "@/models/PlasticCoil";
 
-export class FigureRep {
-    async post(figure: IFigure) {
-        const newFigure = new Figure(figure.modelName, figure.perimetr, figure.creatingTime);
-        const { data, error, loading, fetchData } = useFetch<Figure>('figures', 'post', newFigure);
+type PlasticFormProp = {
+  material: string;
+  color: string;
+  threadLength: number;
+};
 
-        await fetchData();  
-        return { data: data.value, error: error.value, loading: loading.value }; 
-    }
+export class PlasticRep {
+  async post(plastic: PlasticFormProp) {
+    const newPlastic = new PlasticCoil(plastic.material, plastic.color, plastic.threadLength);
+    const { data, error, loading, fetchData } = useFetch<PlasticCoil>('plastics', 'post', newPlastic);
 
-    async get() {
-        const { data, error, loading, fetchData } = useFetch<Figure>('figures', 'get');
-        
-        await fetchData();
+    await fetchData();  
+    return { data: data.value, error: error.value, loading: loading.value }; 
+  }
 
-        return { data: data.value, error: error.value, loading: loading.value }; 
-    }
+  async get() {
+    const { data, error, loading, fetchData } = useFetch<PlasticCoil>('plastics', 'get');
+    
+    await fetchData();  
+    return { data: data.value, error: error.value, loading: loading.value }; 
+  }
 }

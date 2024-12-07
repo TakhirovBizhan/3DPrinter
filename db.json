@@ -25,8 +25,14 @@
       "creatingTime": 6
     },
     {
-      "id": "4fda209d-0ed9-4189-96b5-9369a5eace18",
-      "modelName": "123",
+      "id": "294c4bf8-855a-4cf0-883b-a9003f1cadfc",
+      "modelName": "dsadasda",
+      "perimetr": 1,
+      "creatingTime": 1
+    },
+    {
+      "id": "3f2d683d-299a-447f-a3dd-548c9e4ef048",
+      "modelName": "dsadsada",
       "perimetr": 1,
       "creatingTime": 1
     }
@@ -39,5 +45,12 @@
       "printingSpeed": 2
     }
   ],
-  "plastics": []
+  "plastics": [
+    {
+      "id": "3c238918-3dbd-484f-a6f4-1b4a3273388e",
+      "material": "metal",
+      "color": "red",
+      "threadLength": 50
+    }
+  ]
 }

@@ -1,12 +1,14 @@
-import type { IPlasticCoil } from "./dataInterfaces";
+import { v4 as uuidv4 } from 'uuid';
 
 
-export class PlasticCoil implements IPlasticCoil {
+export class PlasticCoil {
+    private readonly id: string;
     material: string;
     color: string;
     threadLength: number;
 
     constructor(material: string, color: string, threadLength: number) {
+        this.id = uuidv4()
         this.material = material;
         this.color = color;
         this.threadLength = threadLength;

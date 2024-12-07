@@ -1,19 +1,25 @@
 import { useFetch } from "@/hooks/useFetch";
+import { Printer } from "@/models/Printer";
 
 type PrinterFormProps = {
-    mark: string,
-    articule: string,
-    printingSpeed: number
-  }
+  mark: string;
+  articule: string;
+  printingSpeed: number;
+};
 
 export class PrinterRep {
-  post(printer: PrinterFormProps) {
-    const { data, error, loading } = useFetch<PrinterFormProps>('printers', 'post', printer);
-    return { data, error, loading };
+  async post(printer: PrinterFormProps) {
+    const newPrinter = new Printer(printer.mark, printer.articule, printer.printingSpeed)
+    const { data, error, loading, fetchData } = useFetch<Printer>('printers', 'post', newPrinter);
+    
+    await fetchData();  
+    return { data: data.value, error: error.value, loading: loading.value }; 
   }
 
-  get() {
-    const { data, error, loading } = useFetch<PrinterFormProps>('printers', 'get');
-    return { data, error, loading };
+  async get() {
+    const { data, error, loading, fetchData } = useFetch<Printer>('printers', 'get');
+    
+    await fetchData();  
+    return { data: data.value, error: error.value, loading: loading.value }; 
   }
 }

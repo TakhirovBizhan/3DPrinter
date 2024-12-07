@@ -10,6 +10,7 @@ declare module 'vue' {
     CoilCard: typeof import('./src/components/PlasticComponents/CoilCard.vue')['default']
     CoilForm: typeof import('./src/components/PlasticComponents/CoilForm.vue')['default']
     CoilList: typeof import('./src/components/PlasticComponents/CoilList.vue')['default']
+    ElAlert: typeof import('element-plus/es')['ElAlert']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCarousel: typeof import('element-plus/es')['ElCarousel']
@@ -39,6 +40,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     TheFooter: typeof import('./src/components/TheFooter.vue')['default']
     TheHeader: typeof import('./src/components/TheHeader.vue')['default']
+    TheToast: typeof import('./src/components/TheToast.vue')['default']
     ThreadLengthInput: typeof import('./src/components/PlasticComponents/ThreadLengthInput.vue')['default']
   }
 }

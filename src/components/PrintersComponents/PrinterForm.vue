@@ -1,12 +1,5 @@
 <template>
-  <el-form
-    ref="ruleFormRef"
-    :model="ruleForm"
-    :rules="rules"
-    label-width="150px"
-    status-icon
-    size="default"
-  >
+  <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="150px" status-icon size="default">
     <el-form-item label="Printer Mark" prop="mark">
       <el-input v-model="ruleForm.mark" placeholder="Enter printer mark" />
     </el-form-item>
@@ -29,7 +22,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
 import { PrinterRep } from '@/repositories/PrinterRep'; // Класс репозитория
-import type { FormInstance, FormRules } from 'element-plus';
+import { ElNotification, type FormInstance, type FormRules } from 'element-plus';
 
 // Инициализация репозитория
 const printerRep = new PrinterRep();
@@ -59,16 +52,41 @@ const rules = reactive<FormRules>({
 // Методы формы
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
-  await formEl.validate( (valid) => {
+  
+  await formEl.validate(async (valid) => { 
     if (valid) {
-      const { data, error } = printerRep.post(ruleForm);
-      if (error) {
-        console.error('Error submitting form:', error);
-      } else {
-        console.log('Data submitted successfully:', data);
+      try {
+        const { data, error } = await printerRep.post(ruleForm); 
+        
+        if (error) {
+          ElNotification({
+            title: 'Error',
+            message: `Error type: ${error}`,
+            type: 'error',
+          });
+        }
+        
+        if (data) {
+          ElNotification({
+            title: 'Success',
+            message: 'Data submitted successfully',
+            type: 'success',
+          });
+          resetForm(formEl);
+        }
+      } catch (err) {
+        ElNotification({
+          title: 'Error',
+          message: `Unexpected error: ${err}`,
+          type: 'error',
+        });
       }
     } else {
-      console.log('Validation failed.');
+      ElNotification({
+        title: 'Error',
+        message: `Validation failed`,
+        type: 'error',
+      });
     }
   });
 };

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import type { ComponentSize, FormInstance, FormRules } from 'element-plus'
+import { ElNotification, type ComponentSize, type FormInstance, type FormRules } from 'element-plus'
 import type { IFigure } from '@/models/dataInterfaces'
 import { FigureRep } from '@/repositories/FigureRep';
 
@@ -8,9 +8,9 @@ import { FigureRep } from '@/repositories/FigureRep';
 const formSize = ref<ComponentSize>('default')
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive<IFigure>({
-    modelName: '',
-    perimetr: 0,
-    creatingTime: 0,
+  modelName: '',
+  perimetr: 0,
+  creatingTime: 0,
 })
 
 // Правила валидации
@@ -35,23 +35,46 @@ const figureRep = new FigureRep();
 
 // Методы отправки и сброса формы
 const submitForm = async (formEl: FormInstance | undefined) => {
-    if (!formEl) return;
-    await formEl.validate(async (valid) => {
-        if (valid) {
-            try {
-                const { data, error } = await figureRep.post(ruleForm); 
-                if (error) {
-                    console.error('Error submitting form:', error);
-                } else {
-                    console.log('Data submitted successfully:', data);
-                }
-            } catch (err) {
-                console.error('Unexpected error:', err);
-            }
-        } else {
-            console.log('Validation failed');
+  if (!formEl) return;
+  await formEl.validate(async (valid) => {
+    if (valid) {
+      try {
+        const { data, error } = await figureRep.post(ruleForm);
+        if (error) {
+          ElNotification({
+            title: 'Error',
+            message: `Error type: ${error}`,
+            type: 'error',
+            zIndex: 9999,
+            position: 'top-right'
+          })
+        } if (data) {
+          ElNotification({
+            title: 'Success',
+            message: 'Data submitted successfully',
+            type: 'success',
+            zIndex: 9999,
+            position: 'top-right'
+          })
+          resetForm(formEl)
         }
-    });
+      } catch (err) {
+        ElNotification({
+          title: 'Error',
+          message: `Error type: ${err}`,
+          type: 'error',
+          zIndex: 9999,
+          position: 'top-right'
+        })
+      }
+    } else {
+      ElNotification({
+        title: 'Prompt',
+        message: 'This is a message that does not automatically close',
+        duration: 0,
+      })
+    }
+  });
 }
 const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
@@ -60,16 +83,8 @@ const resetForm = (formEl: FormInstance | undefined) => {
 </script>
 
 <template>
-  <el-form
-    ref="ruleFormRef"
-    style="max-width: 400px"
-    :model="ruleForm"
-    :rules="rules"
-    label-width="auto"
-    class="demo-ruleForm"
-    :size="formSize"
-    status-icon
-  >
+  <el-form ref="ruleFormRef" style="max-width: 380px" :model="ruleForm" :rules="rules" label-width="auto"
+    class="demo-ruleForm" :size="formSize" status-icon>
     <el-form-item label="Model Name" prop="modelName">
       <el-input v-model="ruleForm.modelName" />
     </el-form-item>
@@ -90,3 +105,13 @@ const resetForm = (formEl: FormInstance | undefined) => {
     </el-form-item>
   </el-form>
 </template>
+
+<style>
+.el-message {
+  background-color: black !important;
+  height: fit-content !important;
+  position: fixed !important;
+  z-index: 9999 !important;
+
+}
+</style>
