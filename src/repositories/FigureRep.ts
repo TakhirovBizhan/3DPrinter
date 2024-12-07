@@ -1,19 +1,21 @@
 import { useFetch } from "@/hooks/useFetch";
 import type { IFigure } from "@/models/dataInterfaces";
-import { Figure } from "@/models/Figure"
+import { Figure } from "@/models/Figure";
 
 export class FigureRep {
-
-    post(figure: IFigure) {
+    async post(figure: IFigure) {
         const newFigure = new Figure(figure.modelName, figure.perimetr, figure.creatingTime);
-        const { data, error, loading } = useFetch<Figure>('figures', 'post', newFigure);
+        const { data, error, loading, fetchData } = useFetch<Figure>('figures', 'post', newFigure);
 
-        return { data, error, loading };
+        await fetchData();  
+        return { data: data.value, error: error.value, loading: loading.value }; 
     }
 
-    get() {
-        const { data, error, loading } = useFetch<Figure>('figures', 'get');
-        return { data, error, loading };
-    }
+    async get() {
+        const { data, error, loading, fetchData } = useFetch<Figure>('figures', 'get');
+        
+        await fetchData();
 
+        return { data: data.value, error: error.value, loading: loading.value }; 
+    }
 }

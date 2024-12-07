@@ -1,4 +1,3 @@
-// useFetch.ts
 import { ref } from 'vue';
 import axios from 'axios';
 
@@ -8,7 +7,7 @@ const BASE_URL = "http://localhost:3000";
 export function useFetch<T>(url: string, method: Methods, body?: T) {
     const data = ref<T | null>(null);
     const error = ref<string | null>(null);
-    const loading = ref<boolean>(true);
+    const loading = ref<boolean>(false); 
 
     const fetchData = async () => {
         loading.value = true;
@@ -34,18 +33,16 @@ export function useFetch<T>(url: string, method: Methods, body?: T) {
                     response = await axios.delete(`${BASE_URL}/${url}`);
                     break;
                 default:
-                    throw new Error('Неподдерживаемый метод');
+                    throw new Error('Unsupported method');
             }
 
-            data.value = response.data; 
+            data.value = response.data;
         } catch (err) {
-            error.value = err instanceof Error ? err.message : 'Неизвестная ошибка';
+            error.value = err instanceof Error ? err.message : 'Unknown error';
         } finally {
             loading.value = false;
         }
     };
 
-    fetchData();
-
-    return { data, error, loading };
+    return { data, error, loading, fetchData };
 }

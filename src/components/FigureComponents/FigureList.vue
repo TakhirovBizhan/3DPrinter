@@ -4,7 +4,7 @@ import ModelCard from './FigureCard.vue';
  </script>
     <template>
         <div>
-          <el-carousel class="carousel" indicator-position="true" :autoplay="false" trigger="click" arrows="always">
+          <el-carousel class="carousel" indicator-position="" :autoplay="false" trigger="click" arrows="always">
             <el-carousel-item class="content">
                 <ModelCard/>
             </el-carousel-item>

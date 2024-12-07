@@ -2,6 +2,7 @@
 import { reactive, ref } from 'vue'
 import type { ComponentSize, FormInstance, FormRules } from 'element-plus'
 import type { IFigure } from '@/models/dataInterfaces'
+import { FigureRep } from '@/repositories/FigureRep';
 
 // Форма
 const formSize = ref<ComponentSize>('default')
@@ -29,18 +30,29 @@ const rules = reactive<FormRules<IFigure>>({
   ],
 })
 
+// Инициализация репозитория
+const figureRep = new FigureRep();
+
 // Методы отправки и сброса формы
 const submitForm = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      console.log('Submit!', ruleForm)
-    } else {
-      console.log('Error submit!', fields)
-    }
-  })
+    if (!formEl) return;
+    await formEl.validate(async (valid) => {
+        if (valid) {
+            try {
+                const { data, error } = await figureRep.post(ruleForm); 
+                if (error) {
+                    console.error('Error submitting form:', error);
+                } else {
+                    console.log('Data submitted successfully:', data);
+                }
+            } catch (err) {
+                console.error('Unexpected error:', err);
+            }
+        } else {
+            console.log('Validation failed');
+        }
+    });
 }
-
 const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.resetFields()

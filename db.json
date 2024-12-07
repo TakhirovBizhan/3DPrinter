@@ -1,5 +1,43 @@
 {
-    "figures": [],
-    "printers": [],
-    "plastics": []
-  }
+  "figures": [
+    {
+      "id": "8df32f58-5bff-4def-b60b-09e60cf03f88",
+      "modelName": "Dragon",
+      "perimetr": 5.6,
+      "creatingTime": 10
+    },
+    {
+      "id": "21e39626-704b-48d7-88bf-0d0c517267bb",
+      "modelName": "triangle",
+      "perimetr": 2,
+      "creatingTime": 4
+    },
+    {
+      "id": "974c3734-936f-4b22-b159-ae3456b87272",
+      "modelName": "Tank",
+      "perimetr": 24,
+      "creatingTime": 16
+    },
+    {
+      "id": "e676e192-1af4-4b3c-89d9-60ecabb2250b",
+      "modelName": "Ball",
+      "perimetr": 4,
+      "creatingTime": 6
+    },
+    {
+      "id": "4fda209d-0ed9-4189-96b5-9369a5eace18",
+      "modelName": "123",
+      "perimetr": 1,
+      "creatingTime": 1
+    }
+  ],
+  "printers": [
+    {
+      "id": "a2c6",
+      "mark": "M-12",
+      "articule": "qrt12",
+      "printingSpeed": 2
+    }
+  ],
+  "plastics": []
+}
