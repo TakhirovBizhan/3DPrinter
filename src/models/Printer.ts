@@ -2,8 +2,8 @@ import { PrintingError, type IFigure, type IPlasticCoil } from "./dataInterfaces
 import { v4 as uuidv4 } from 'uuid';
 
 export class Printer {
-    private readonly id: string;
-    private isPrintStarted = false;
+    readonly id: string;
+    isPrintStarted = false;
     mark: string;
     articule: string;
     plasticCoil: IPlasticCoil | null;

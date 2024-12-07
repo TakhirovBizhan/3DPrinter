@@ -51,6 +51,12 @@
       "material": "metal",
       "color": "red",
       "threadLength": 50
+    },
+    {
+      "id": "3c238918-3dbd-484f-a6f4-1b4a3273388e",
+      "material": "wood",
+      "color": "green",
+      "threadLength": 22
     }
   ]
 }

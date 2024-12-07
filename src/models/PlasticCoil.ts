@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 export class PlasticCoil {
-    private readonly id: string;
+    readonly id: string;
     material: string;
     color: string;
     threadLength: number;

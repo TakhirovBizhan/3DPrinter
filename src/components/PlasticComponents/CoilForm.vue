@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
 import type { ComponentSize, FormInstance, FormRules } from 'element-plus';
-import { PlasticRep } from '@/repositories/PlasticRep';
+import { plasticRep } from '@/repositories/PlasticRep';
 import { ElNotification } from 'element-plus';
 
 interface IPlasticCoil {
@@ -9,9 +9,6 @@ interface IPlasticCoil {
   color: string;
   threadLength: number;
 }
-
-// Инициализация репозитория
-const plasticRep = new PlasticRep();
 
 // Форма
 const formSize = ref<ComponentSize>('default');

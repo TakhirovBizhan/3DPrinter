@@ -7,7 +7,7 @@ type PlasticFormProp = {
   threadLength: number;
 };
 
-export class PlasticRep {
+ class PlasticRep {
   async post(plastic: PlasticFormProp) {
     const newPlastic = new PlasticCoil(plastic.material, plastic.color, plastic.threadLength);
     const { data, error, loading, fetchData } = useFetch<PlasticCoil>('plastics', 'post', newPlastic);
@@ -23,3 +23,5 @@ export class PlasticRep {
     return { data: data.value, error: error.value, loading: loading.value }; 
   }
 }
+
+export const plasticRep = new PlasticRep();

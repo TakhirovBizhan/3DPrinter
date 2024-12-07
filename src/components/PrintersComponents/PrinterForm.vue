@@ -21,11 +21,10 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
-import { PrinterRep } from '@/repositories/PrinterRep'; // Класс репозитория
+import { printerRep } from '@/repositories/PrinterRep'; // Класс репозитория
 import { ElNotification, type FormInstance, type FormRules } from 'element-plus';
 
 // Инициализация репозитория
-const printerRep = new PrinterRep();
 
 // Данные формы
 const ruleFormRef = ref<FormInstance>();

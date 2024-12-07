@@ -2,7 +2,7 @@
 import { reactive, ref } from 'vue'
 import { ElNotification, type ComponentSize, type FormInstance, type FormRules } from 'element-plus'
 import type { IFigure } from '@/models/dataInterfaces'
-import { FigureRep } from '@/repositories/FigureRep';
+import { figureRep } from '@/repositories/FigureRep';
 
 // Форма
 const formSize = ref<ComponentSize>('default')
@@ -29,9 +29,6 @@ const rules = reactive<FormRules<IFigure>>({
     { validator: (rule, value) => value > 0, message: 'Creation time must be greater than 0', trigger: 'blur' },
   ],
 })
-
-// Инициализация репозитория
-const figureRep = new FigureRep();
 
 // Методы отправки и сброса формы
 const submitForm = async (formEl: FormInstance | undefined) => {

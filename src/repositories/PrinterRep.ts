@@ -7,7 +7,7 @@ type PrinterFormProps = {
   printingSpeed: number;
 };
 
-export class PrinterRep {
+class PrinterRep {
   async post(printer: PrinterFormProps) {
     const newPrinter = new Printer(printer.mark, printer.articule, printer.printingSpeed)
     const { data, error, loading, fetchData } = useFetch<Printer>('printers', 'post', newPrinter);
@@ -23,3 +23,5 @@ export class PrinterRep {
     return { data: data.value, error: error.value, loading: loading.value }; 
   }
 }
+
+export const printerRep = new PrinterRep();

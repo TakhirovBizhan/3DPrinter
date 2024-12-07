@@ -3,7 +3,7 @@ import { defineProps } from 'vue'
 
 defineProps({
   modelName: String,
-  perimetr: String,
+  perimetr: Number,
   creatingTime: Number,
   color: String
 })
