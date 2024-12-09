@@ -6,14 +6,13 @@ import ModelList from '@/components/FigureComponents/FigureList.vue';
 
 <template>
   <main>
-      <PrinterList />
-        <CoilList />
-        <ModelList />
+    <PrinterList />
+    <CoilList />
+    <ModelList />
   </main>
 </template>
 
 <style>
-
 main {
   min-height: 81.5vh;
   max-width: 1440px;
@@ -29,6 +28,4 @@ main {
 body {
   background-color: rgb(43, 43, 43);
 }
-
-
 </style>

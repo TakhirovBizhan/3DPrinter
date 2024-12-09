@@ -26,6 +26,7 @@ declare module 'vue' {
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElSelect: typeof import('element-plus/es')['ElSelect']
+    ElTag: typeof import('element-plus/es')['ElTag']
     ElTransfer: typeof import('element-plus/es')['ElTransfer']
     FigureCard: typeof import('./src/components/FigureComponents/FigureCard.vue')['default']
     FigureForm: typeof import('./src/components/FigureComponents/FigureForm.vue')['default']

@@ -23,18 +23,6 @@
       "modelName": "Ball",
       "perimetr": 4,
       "creatingTime": 6
-    },
-    {
-      "id": "294c4bf8-855a-4cf0-883b-a9003f1cadfc",
-      "modelName": "dsadasda",
-      "perimetr": 1,
-      "creatingTime": 1
-    },
-    {
-      "id": "3f2d683d-299a-447f-a3dd-548c9e4ef048",
-      "modelName": "dsadsada",
-      "perimetr": 1,
-      "creatingTime": 1
     }
   ],
   "printers": [
@@ -43,6 +31,17 @@
       "mark": "M-12",
       "articule": "qrt12",
       "printingSpeed": 2
+    },
+    {
+      "id": "1200309d-fdff-4bdb-883c-b179625d4588",
+      "isPrintStarted": false,
+      "mark": "H-34",
+      "articule": "34-34",
+      "plasticCoil": null,
+      "printingSpeed": 3,
+      "printQueue": [],
+      "completedModels": [],
+      "currentCoilId": null
     }
   ],
   "plastics": [

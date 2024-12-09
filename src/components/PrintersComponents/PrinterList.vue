@@ -16,7 +16,7 @@ onMounted(async () => {
 
 <template>
   <div>
-    <el-carousel class="carousel" indicator-position="" :autoplay="false" trigger="click" arrows="always">
+    <el-carousel class="carousel" indicator-position="outside" :autoplay="false" trigger="click" arrows="always">
       <el-carousel-item
         class="content"
         v-for="printer in printers"

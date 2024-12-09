@@ -8,6 +8,6 @@ export class Figure {
         public modelName: string,
         public perimetr: number,
         public creatingTime: number,
-        public color: string,
+        public color:  'red' | 'blue' | 'green' | 'yellow' | 'black' = 'black',
     ) { }
 }

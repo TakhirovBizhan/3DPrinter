@@ -1,30 +1,26 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
-import type { ComponentSize, FormInstance, FormRules } from 'element-plus';
+import type { FormRules } from 'element-plus';
 import { plasticRep } from '@/repositories/PlasticRep';
-import { ElNotification } from 'element-plus';
+import { ElMessage } from 'element-plus';
+import type { PlasticProps } from '@/models/dataProps';
 
-interface IPlasticCoil {
-  material: string;
-  color: string;
-  threadLength: number;
-}
-
-// Форма
-const formSize = ref<ComponentSize>('default');
-const ruleFormRef = ref<FormInstance>();
-const ruleForm = reactive<IPlasticCoil>({
+// Инициализация формы
+const form = reactive({
   material: '',
   color: '',
   threadLength: 0,
 });
 
-const rules = reactive<FormRules<IPlasticCoil>>({
+// Список цветов
+const allowedColors = ['red', 'blue', 'green', 'yellow', 'black'];
+
+const rules = reactive<FormRules<PlasticProps>>({
   material: [
     { required: true, message: 'Please input coil material', trigger: 'blur' },
   ],
   color: [
-    { required: true, message: 'Please input coil color', trigger: 'blur' },
+    { required: true, message: 'Please select coil color', trigger: 'change' },
   ],
   threadLength: [
     { required: true, message: 'Please input thread length', trigger: 'blur' },
@@ -33,73 +29,56 @@ const rules = reactive<FormRules<IPlasticCoil>>({
 });
 
 // Методы отправки и сброса формы
-const submitForm = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
-  await formEl.validate(async (valid) => {
+const formRef = ref(); // Ссылка на форму
+
+// Отправка данных
+const submitForm = async () => {
+  if (!formRef.value) return;
+
+  formRef.value.validate(async (valid: boolean) => {
     if (valid) {
-      try {
-        const { data, error } = await plasticRep.post(ruleForm);
-        if (error) {
-          ElNotification({
-            title: 'Error',
-            message: `Error: ${error}`,
-            type: 'error',
-          });
-        } if(data) {
-          ElNotification({
-            title: 'Success',
-            message: 'Plastic coil added successfully',
-            type: 'success',
-          });
-          resetForm(formEl);
-        }
-      } catch (err) {
-        ElNotification({
-          title: 'Error',
-          message: `Unexpected error: ${err}`,
-          type: 'error',
-        });
+      const { error } = await plasticRep.post(form);
+      if (!error) {
+        ElMessage.success('Plastic coil added successfully!');
+        Object.assign(form, { material: '', color: '', threadLength: 0 });
+      } else {
+        ElMessage.error('Failed to add plastic coil.');
       }
-    } else {
-      ElNotification({
-        title: 'Error',
-        message: 'Validation failed',
-        type: 'error',
-      });
     }
   });
-};
-
-const resetForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
-  formEl.resetFields();
 };
 </script>
 
 <template>
-  <el-form
-    ref="ruleFormRef"
-    style="max-width: 380px"
-    :model="ruleForm"
-    :rules="rules"
-    label-width="auto"
-    class="demo-ruleForm"
-    :size="formSize"
-    status-icon
-  >
-    <el-form-item label="Coil material" prop="material">
-      <el-input v-model="ruleForm.material" />
+  <el-form ref="formRef" :model="form" :rules="rules" label-width="120px">
+    <el-form-item label="Material" prop="material">
+      <el-input v-model="form.material" placeholder="Enter coil material" />
     </el-form-item>
-    <el-form-item label="Coil color" prop="color">
-      <el-input v-model="ruleForm.color" />
+    
+    <el-form-item label="Color" prop="color">
+      <el-select v-model="form.color" placeholder="Select a color">
+        <el-option
+          v-for="color in allowedColors"
+          :key="color"
+          :label="color"
+          :value="color"
+        />
+      </el-select>
     </el-form-item>
-    <el-form-item label="Thread length (mm)" prop="threadLength">
-      <el-input-number v-model="ruleForm.threadLength" :min="1" :precision="2" :step="0.1" />
+
+    <el-form-item label="Thread Length" prop="threadLength">
+      <el-input-number v-model="form.threadLength" placeholder="Enter thread length" />
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="submitForm(ruleFormRef)">Create</el-button>
-      <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
+      <el-button type="primary" @click="submitForm">Add Coil</el-button>
     </el-form-item>
   </el-form>
 </template>
+
+<style scoped>
+.el-form {
+  max-width: 380px;
+  margin: auto;
+}
+</style>

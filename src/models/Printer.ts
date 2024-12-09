@@ -1,15 +1,18 @@
-import { PrintingError, type IFigure, type IPlasticCoil } from "./dataInterfaces";
+import { PrintingError } from "./dataProps";
 import { v4 as uuidv4 } from 'uuid';
+import type { PlasticCoil } from "./PlasticCoil";
+import type { Figure } from "./Figure";
 
 export class Printer {
     readonly id: string;
     isPrintStarted = false;
     mark: string;
     articule: string;
-    plasticCoil: IPlasticCoil | null;
+    plasticCoil: PlasticCoil | null;
     printingSpeed: number;
-    printQueue: IFigure[];
-    completedModels: IFigure[];
+    printQueue: Figure[];
+    completedModels: Figure[];
+    currentCoilId: string | null;
 
     constructor(
         mark: string,
@@ -23,9 +26,11 @@ export class Printer {
         this.printingSpeed = printingSpeed;
         this.printQueue = [];
         this.completedModels = [];
+        this.currentCoilId = null; 
+
     }
 
-    putCoil(plasticCoil: IPlasticCoil): void {
+    putCoil(plasticCoil: PlasticCoil): void {
         this.plasticCoil = plasticCoil;
     }
 
@@ -33,11 +38,11 @@ export class Printer {
         this.plasticCoil = null;
     }
 
-    addModelToQueue(figure: IFigure): void {
+    addModelToQueue(figure: Figure): void {
         this.printQueue.push(figure);
     }
 
-    removeFromPrintQueue(figure: IFigure): void {
+    removeFromPrintQueue(figure: Figure): void {
         if (this.isPrintStarted && figure === this.printQueue[0]) {
             throw new Error('Cannot remove the current printing figure!');
         } else {
@@ -48,7 +53,7 @@ export class Printer {
         }
     }
 
-    startPrinting(callback: (err: PrintingError | null, success: IFigure | null) => void): void {
+    startPrinting(callback: (err: PrintingError | null, success: Figure | null) => void): void {
         if (!this.plasticCoil) {
             callback(new PrintingError(this.printQueue[0]?.modelName || 'Unknown', 'There is no coil in the printer!'), null);
             return;
@@ -104,7 +109,7 @@ export class Printer {
 
             if (printed >= totalPerimeter) {
                 clearInterval(interval);
-                this.completedModels.push(this.printQueue.shift() as IFigure);
+                this.completedModels.push(this.printQueue.shift() as Figure);
                 callback(null, currentModel);
 
                 if (this.printQueue.length > 0) {

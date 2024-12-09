@@ -1,33 +1,22 @@
-export interface IPlasticCoil {
+export type PlasticProps = {
     material: string,
     color: string,
     threadLength: number;
-    cutThread(newLength: number): void;
 }
 
-export interface IFigure {
-    modelName: string,
-    perimetr: number,
-    creatingTime: number;
-}
-
-export interface IPrinter {
-    id: string;
-    isPrintStarted: boolean;
+export type PrinterProps = {
     mark: string;
     articule: string;
-    plasticCoil: IPlasticCoil | null;
     printingSpeed: number;
-    printQueue: IFigure[];
-    completedModels: IFigure[];
-    putCoil(plasticCoil: IPlasticCoil): void;
-    removeCoil(): void;
-    addModelToQueue(figure: IFigure): void;
-    removeFromPrintQueue(figure: IFigure): void;
-    startPrinting(callback: (err: PrintingError | null, success: IFigure | null) => void): void;
-    stopPrint(): void;
-}
+  };
+  
 
+export type FigureProps = {
+    modelName: string,
+    perimetr: number,
+    creatingTime: number,
+    color?: 'red' | 'blue' | 'green' | 'yellow' | 'black'
+}
 export class PrintingError extends Error {
     modelName: string;
     remainingLength?: string;

@@ -1,20 +1,20 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import { ElNotification, type ComponentSize, type FormInstance, type FormRules } from 'element-plus'
-import type { IFigure } from '@/models/dataInterfaces'
+import type { FigureProps } from '@/models/dataProps'
 import { figureRep } from '@/repositories/FigureRep';
 
 // Форма
 const formSize = ref<ComponentSize>('default')
 const ruleFormRef = ref<FormInstance>()
-const ruleForm = reactive<IFigure>({
+const ruleForm = reactive<FigureProps>({
   modelName: '',
   perimetr: 0,
   creatingTime: 0,
 })
 
 // Правила валидации
-const rules = reactive<FormRules<IFigure>>({
+const rules = reactive<FormRules<FigureProps>>({
   modelName: [
     { required: true, message: 'Please input the model name', trigger: 'blur' },
   ],

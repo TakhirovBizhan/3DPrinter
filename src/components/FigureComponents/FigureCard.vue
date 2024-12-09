@@ -2,9 +2,9 @@
 import { defineProps } from 'vue'
 
 defineProps({
-  modelName: String,
-  perimetr: Number,
-  creatingTime: Number,
+  modelName: { type: String, default: 'No name'},
+  perimetr: {type: Number, default: 0},
+  creatingTime: {type: Number, default: 0},
   color: String
 })
 </script>
