@@ -42,6 +42,17 @@
       "printQueue": [],
       "completedModels": [],
       "currentCoilId": null
+    },
+    {
+      "id": "e9fe662e-6e93-4bd9-b672-55f8d7d908cb",
+      "isPrintStarted": false,
+      "mark": "new-Printer",
+      "articule": "new-Printer-1234",
+      "plasticCoil": null,
+      "printingSpeed": 2,
+      "printQueue": [],
+      "completedModels": [],
+      "currentCoilId": null
     }
   ],
   "plastics": [

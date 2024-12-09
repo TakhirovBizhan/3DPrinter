@@ -5,18 +5,26 @@ import CoilList from '@/components/PlasticComponents/CoilList.vue';
 </script>
 
 <template>
-  <main>
-    <h2>Plastic</h2>
-    <div class="container">
-      <CoilList />
-    <div class="container__form">
-      <CoilForm />
-    </div>
+  <main class="main">
+    <div class="wrapper">
+      <h2>Plastic</h2>
+      <div class="container">
+        <CoilList />
+        <div class="container__form">
+          <CoilForm />
+        </div>
+      </div>
     </div>
   </main>
 </template>
 
-<style lang="css" scoped>
+<style lang="css">
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 1440px;
+  align-items: center;
+}
 
 .container {
   display: flex;
@@ -30,5 +38,4 @@ import CoilList from '@/components/PlasticComponents/CoilList.vue';
   border-radius: 20px;
   height: fit-content;
 }
-
 </style>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
 
 defineProps({
   mark: String,
@@ -10,10 +9,7 @@ defineProps({
   modelQueue: []
 });
 
-
 </script>
-
-
 
 <template>
     <el-card class="card">
@@ -43,7 +39,7 @@ defineProps({
   }
 
   .card {
-    max-width: 350px
+    max-width: 250px
   }
 
   .button__busy:hover {

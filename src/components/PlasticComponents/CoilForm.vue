@@ -28,10 +28,8 @@ const rules = reactive<FormRules<PlasticProps>>({
   ],
 });
 
-// Методы отправки и сброса формы
-const formRef = ref(); // Ссылка на форму
+const formRef = ref(); 
 
-// Отправка данных
 const submitForm = async () => {
   if (!formRef.value) return;
 

@@ -1,22 +1,24 @@
 <script setup lang="ts">
-import CoilList from '@/components/PlasticComponents/CoilList.vue';
-import PrinterList from '@/components/PrintersComponents/PrinterList.vue';
-import ModelList from '@/components/FigureComponents/FigureList.vue';
+import coilCarousel from '@/components/PlasticComponents/CoilCarousel.vue';
+import PrinterCarousel from '@/components/PrintersComponents/PrinterCarousel.vue';
+import ModelCarousel from '@/components/FigureComponents/FigureCarousel.vue';
 </script>
 
 <template>
   <main>
-    <PrinterList />
-    <CoilList />
-    <ModelList />
+    <PrinterCarousel />
+    <coilCarousel />
+    <ModelCarousel />
   </main>
 </template>
 
 <style>
 main {
   min-height: 81.5vh;
-  max-width: 1440px;
   margin: auto;
+  max-width: 1440px;
+  padding-left: 8px;
+  padding-right: 8px;
   margin-top: 30px;
   margin-bottom: 30px;
   display: flex;
@@ -24,8 +26,10 @@ main {
   gap: 50px;
 }
 
-
-body {
-  background-color: rgb(43, 43, 43);
+.no_data {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #ca1111;
 }
 </style>

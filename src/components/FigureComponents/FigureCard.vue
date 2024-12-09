@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
 
 defineProps({
   modelName: { type: String, default: 'No name'},
@@ -10,14 +9,14 @@ defineProps({
 </script>
 
 <template>
-  <el-card style="max-width: 350px">
+  <el-card style="max-width: 250px">
     <template #header>
       <h4>Figure: {{ modelName }}</h4>
     </template>
 
     <svg
-      width="300"
-      height="300"
+      width="200"
+      height="200"
       viewBox="0 0 443 616"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

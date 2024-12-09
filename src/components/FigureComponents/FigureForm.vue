@@ -30,7 +30,6 @@ const rules = reactive<FormRules<FigureProps>>({
   ],
 })
 
-// Методы отправки и сброса формы
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate(async (valid) => {
