@@ -1,14 +1,5 @@
 {
-  "figures": [
-    {
-      "id": "951c61fb-d8cb-4b30-932b-cf7397b32612",
-      "creatingDate": "Dec 10, 15:33",
-      "status": "created",
-      "modelName": "cube",
-      "perimetr": 2,
-      "color": "black"
-    }
-  ],
+  "figures": [],
   "printers": [
     {
       "id": "645f",

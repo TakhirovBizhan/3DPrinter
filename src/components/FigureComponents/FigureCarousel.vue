@@ -1,24 +1,21 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { figureRep } from '@/repositories/FigureRep';
+import { onMounted } from 'vue';
 import FigureCard from './FigureCard.vue';
-import type { Figure } from '@/models/Figure';
+import { useFigureStore } from '@/store/FigureStore';
 
-const figures = ref<Figure[]>([]);
+const figureStore = useFigureStore();
 
 onMounted(async () => {
-  const { data, error } = await figureRep.get();
-  if (!error && Array.isArray(data)) {
-    figures.value = data;
-  }
+  await figureStore.fetchFigures();
 });
+
 </script>
 
 <template>
   <div>
-    <el-carousel class="carousel" v-if="figures.length > 0" :autoplay="false" trigger="click" arrows="always"
-      indicator-position="none">
-      <el-carousel-item class="content" v-for="figure in figures" :key="figure.id">
+    <el-carousel class="carousel" v-if="figureStore.figures.length > 0" :autoplay="false" trigger="click"
+      arrows="always" indicator-position="none">
+      <el-carousel-item class="content" v-for="figure in figureStore.figures" :key="figure.id">
         <FigureCard :status="figure.status" :id="figure.id" :modelName="figure.modelName" :perimetr="figure.perimetr"
           :creating-date="figure.creatingDate" :color="figure.color" />
       </el-carousel-item>

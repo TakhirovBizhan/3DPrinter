@@ -1,14 +1,21 @@
 <script setup lang="ts">
+import { useFigureStore } from '@/store/FigureStore';
 import { Delete } from '@element-plus/icons-vue';
 
+const figureStore = useFigureStore();
+
+async function deleteFigure(id: string) {
+  await figureStore.deleteFigure(id);
+}
+
 defineProps({
-  id: String,
-  status: String,
+  id: { type: String, required: true },
+  status: { type: String, required: true },
   modelName: { type: String, default: 'No name' },
-  perimetr: { type: Number, default: 0 },
-  creatingDate: { type: String },
-  color: String
-})
+  perimetr: { type: Number, required: true },
+  creatingDate: { type: String, required: true },
+  color: { type: String, required: true }
+});
 </script>
 
 <template>
@@ -26,12 +33,12 @@ defineProps({
     <p class="text">Creating date: {{ creatingDate }}</p>
     <template #footer>
       <el-button type="primary">use</el-button>
-      <el-button onclick="" type="danger" :icon="Delete" circle />
+      <el-button @click="() => deleteFigure(id)" type="danger" :icon="Delete" circle />
     </template>
   </el-card>
 </template>
 
-<style lang="css" scoped>
+<style scoped>
 .status {
   font-size: 12px;
   color: rgb(151, 151, 151);
