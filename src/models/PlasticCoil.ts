@@ -6,6 +6,7 @@ export class PlasticCoil {
     material: string;
     color: string;
     threadLength: number;
+    inUse: boolean = false;
 
     constructor(material: string, color: string, threadLength: number) {
         this.id = uuidv4()

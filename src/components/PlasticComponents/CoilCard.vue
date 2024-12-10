@@ -4,6 +4,7 @@ defineProps({
   material: String,
   color: String,
   threadLength: Number,
+  inUse: Boolean
 })
 </script>
 
@@ -11,6 +12,8 @@ defineProps({
   <el-card class="card">
     <template #header>
       <h4>Material: {{ material }}</h4>
+      <el-button class="button__busy" v-if="inUse" type="danger" plain>In use</el-button>
+      <el-button class="button__not_busy" v-else type="success" plain>Free</el-button>
     </template>
     <svg width="200" height="200" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -37,5 +40,15 @@ h4 {
 
 .spool__img {
   width: 100%;
+}
+
+.button__busy:hover {
+  color: var(--el-color-danger);
+  background-color: var(--el-color-danger-light-9);
+}
+
+.button__not_busy:hover {
+  color: var(--el-color-success);
+  background-color: var(--el-color-success-light-9);
 }
 </style>

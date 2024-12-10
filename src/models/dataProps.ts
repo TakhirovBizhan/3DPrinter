@@ -14,7 +14,6 @@ export type PrinterProps = {
 export type FigureProps = {
     modelName: string,
     perimetr: number,
-    creatingTime: number,
     color?: 'red' | 'blue' | 'green' | 'yellow' | 'black'
 }
 export class PrintingError extends Error {

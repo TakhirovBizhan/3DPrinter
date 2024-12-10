@@ -16,14 +16,8 @@ onMounted(async () => {
 
 <template>
   <div>
-    <el-carousel
-      class="carousel"
-      :autoplay="false"
-      trigger="click"
-      arrows="always"
-      indicator-position="none"
-      v-if="coils.length > 0"   
-    >
+    <el-carousel class="carousel" :autoplay="false" trigger="click" arrows="always" indicator-position="none"
+      v-if="coils.length > 0">
       <el-carousel-item class="content" v-for="coil in coils" :key="coil.id">
         <CoilCard :material="coil.material" :color="coil.color" :thread-length="coil.threadLength" />
       </el-carousel-item>
@@ -42,6 +36,6 @@ onMounted(async () => {
 
 .content {
   min-width: 250px;
-  min-height: 475px;
+  min-height: 490px;
 }
 </style>

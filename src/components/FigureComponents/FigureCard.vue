@@ -1,9 +1,9 @@
 <script setup lang="ts">
 
 defineProps({
-  modelName: { type: String, default: 'No name'},
-  perimetr: {type: Number, default: 0},
-  creatingTime: {type: Number, default: 0},
+  modelName: { type: String, default: 'No name' },
+  perimetr: { type: Number, default: 0 },
+  creatingDate: { type: String },
   color: String
 })
 </script>
@@ -14,19 +14,13 @@ defineProps({
       <h4>Figure: {{ modelName }}</h4>
     </template>
 
-    <svg
-      width="200"
-      height="200"
-      viewBox="0 0 443 616"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="200" height="200" viewBox="0 0 443 616" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M147.5 154L275.239 500.5H19.7613L147.5 154Z" :fill="color ? color : 'black'" />
       <path d="M295.5 462L423.239 115.5H167.761L295.5 462Z" :fill="color ? color : 'black'" />
     </svg>
 
-    <p class="text item">Perimetr: {{ perimetr }}</p>
-    <p class="text item">Creating time: {{ creatingTime }}</p>
+    <p class="text">Perimetr: {{ perimetr }}</p>
+    <p class="text">Creating date: {{ creatingDate }}</p>
     <template #footer>
       <el-button type="primary">use</el-button>
     </template>

@@ -19,7 +19,7 @@ onMounted(async () => {
         <ul class="list" v-if="figures.length > 0">
             <li v-for="figure in figures" :key="figure.id">
                 <FigureCard :modelName="figure.modelName" :perimetr="figure.perimetr"
-                    :creatingTime="figure.creatingTime" :color="figure.color" />
+                    :creatingDate="figure.creatingDate" :color="figure.color" />
             </li>
         </ul>
 

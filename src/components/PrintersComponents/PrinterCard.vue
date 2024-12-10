@@ -2,7 +2,7 @@
 
 defineProps({
   mark: String,
-  name: String,
+  articule: String,
   plasticCoil: String,
   isPrintStarted: Boolean,
   printingSpeed: Number,
@@ -12,45 +12,46 @@ defineProps({
 </script>
 
 <template>
-    <el-card class="card">
-      <template #header>
-        <h4>Printer: {{ mark }}</h4>
-        <el-button class="button__busy" v-if="isPrintStarted" type="danger" plain>Busy</el-button>
-    <el-button class="button__not_busy" v-else type="success" plain>Not busy</el-button>
-      </template>
-      <img
-        src=https://cdn2.iconfinder.com/data/icons/robotics-butterscotch-vol-1/512/3D_Print-512.png
-        style="width: 100%"
-      />
-      <p class="text item">plastic coil: {{ plasticCoil }}</p>
-      <p class="text item">printing speed: {{ printingSpeed }}</p>
-      <template #footer>
-         <el-button type="primary">Use</el-button>
-         <el-button type="info">Config</el-button>
-      </template>
-    </el-card>
-  </template>
-  
-  <style lang="css" scoped>
-  
-  h4 {
-    margin-bottom: 3px;
-    margin-top: 3px;
-  }
+  <el-card class="card">
+    <template #header>
+      <h4>Printer: {{ mark }}</h4>
+      <el-button class="button__busy" v-if="isPrintStarted" type="danger" plain>Busy</el-button>
+      <el-button class="button__not_busy" v-else type="success" plain>Not busy</el-button>
+    </template>
+    <img src=https://cdn2.iconfinder.com/data/icons/robotics-butterscotch-vol-1/512/3D_Print-512.png
+      style="width: 100%" />
+    <p class="article">plastic coil: {{ articule }}</p>
+    <p class="text">plastic coil: {{ plasticCoil }}</p>
+    <p class="text">printing speed: {{ printingSpeed }}</p>
+    <template #footer>
+      <el-button type="primary">Use</el-button>
+      <el-button type="info">Config</el-button>
+    </template>
+  </el-card>
+</template>
 
-  .card {
-    max-width: 250px
-  }
+<style lang="css" scoped>
+.article {
+  color: rgb(151, 151, 151);
+  font-size: 12px;
+}
 
-  .button__busy:hover {
-    color: var(--el-color-danger);
-    background-color: var(--el-color-danger-light-9);
-  }
+h4 {
+  margin-bottom: 3px;
+  margin-top: 3px;
+}
 
-  .button__not_busy:hover {
-    color: var(--el-color-success);
-    background-color: var(--el-color-success-light-9);
-  }
+.card {
+  max-width: 250px
+}
 
+.button__busy:hover {
+  color: var(--el-color-danger);
+  background-color: var(--el-color-danger-light-9);
+}
 
-  </style>
+.button__not_busy:hover {
+  color: var(--el-color-success);
+  background-color: var(--el-color-success-light-9);
+}
+</style>

@@ -1,7 +1,7 @@
-import { PrintingError } from "./dataProps";
 import { v4 as uuidv4 } from 'uuid';
-import type { PlasticCoil } from "./PlasticCoil";
-import type { Figure } from "./Figure";
+import type { PlasticCoil } from './PlasticCoil';
+import type { Figure } from './Figure';
+import { PrintingError } from './dataProps';
 
 export class Printer {
     readonly id: string;
@@ -19,108 +19,90 @@ export class Printer {
         articule: string,
         printingSpeed: number,
     ) {
-        this.id = uuidv4()
+        this.id = uuidv4();
         this.mark = mark;
         this.articule = articule;
         this.plasticCoil = null;
         this.printingSpeed = printingSpeed;
         this.printQueue = [];
         this.completedModels = [];
-        this.currentCoilId = null; 
-
+        this.currentCoilId = null;
     }
 
-    putCoil(plasticCoil: PlasticCoil): void {
+    putCoil(plasticCoil: PlasticCoil): string {
         this.plasticCoil = plasticCoil;
+        return `Coil ${plasticCoil.id} loaded.`;
     }
 
-    removeCoil(): void {
+    removeCoil(): string {
         this.plasticCoil = null;
+        return 'Coil removed.';
     }
 
-    addModelToQueue(figure: Figure): void {
+    addModelToQueue(figure: Figure): string {
         this.printQueue.push(figure);
+        return `Model ${figure.modelName} added to the queue.`;
     }
 
-    removeFromPrintQueue(figure: Figure): void {
+    removeFromPrintQueue(figure: Figure): string {
         if (this.isPrintStarted && figure === this.printQueue[0]) {
             throw new Error('Cannot remove the current printing figure!');
-        } else {
-            const index = this.printQueue.indexOf(figure);
-            if (index !== -1) {
-                this.printQueue.splice(index, 1);
-            }
         }
+        const index = this.printQueue.indexOf(figure);
+        if (index !== -1) {
+            this.printQueue.splice(index, 1);
+            return `Model ${figure.modelName} removed from the queue.`;
+        }
+        return `Model ${figure.modelName} not found in the queue.`;
     }
 
-    startPrinting(callback: (err: PrintingError | null, success: Figure | null) => void): void {
+    async startPrinting(callback: (err: PrintingError | null, success: Figure | null) => void): Promise<string> {
         if (!this.plasticCoil) {
             callback(new PrintingError(this.printQueue[0]?.modelName || 'Unknown', 'There is no coil in the printer!'), null);
-            return;
+            return 'Error: No coil loaded.';
         }
         if (this.printQueue.length === 0) {
             callback(new PrintingError('No model', 'Print queue is empty!'), null);
-            return;
+            return 'Error: Print queue is empty.';
         }
 
         this.isPrintStarted = true;
+        const currentModel = this.printQueue[0];
+        currentModel.setStatusInProccess();
 
         let printed = 0;
-        const currentModel = this.printQueue[0];
         const totalPerimeter = currentModel.perimetr;
-        const coilLengthPerStep = totalPerimeter / currentModel.creatingTime;
+        const coilLengthPerStep = totalPerimeter / 100;
 
-        const interval = setInterval(() => {
-            if (this.plasticCoil) {
+        return new Promise((resolve) => {
+            const interval = setInterval(() => {
                 try {
-                    this.plasticCoil.cutThread(coilLengthPerStep);
+                    this.plasticCoil?.cutThread(coilLengthPerStep);
                 } catch (e) {
                     if (e instanceof PrintingError) {
                         clearInterval(interval);
-                        callback(new PrintingError(currentModel.modelName, 'Not enough filament!', this.plasticCoil.threadLength), null);
+                        callback(e, null);
+                        resolve(e.message);
                         return;
-                    } else {
-                        throw e;
                     }
                 }
-            }
-            const diceRoll = Math.random(); 
-            if (diceRoll < 0.1) { 
-                const problemTypeRoll = Math.random();
-                let errorMessage: string;
 
-                if (problemTypeRoll < 0.33) {
-                    errorMessage = 'Filament broke!';
-                } else if (problemTypeRoll < 0.66) {
-                    errorMessage = 'Printer overheated!';
-                } else {
-                    errorMessage = 'Model detached from the base!';
+                printed += coilLengthPerStep;
+                //const progressPercentage = Math.min((printed / totalPerimeter) * 100, 100).toFixed(2);
+                if (printed >= totalPerimeter) {
+                    clearInterval(interval);
+                    currentModel.setStatusReady();
+                    this.completedModels.push(this.printQueue.shift() as Figure);
+                    callback(null, currentModel);
+                    resolve(`Model ${currentModel.modelName} is ready.`);
                 }
-
-                clearInterval(interval);
-                callback(new PrintingError(currentModel.modelName, errorMessage), null);
-                return;
-            }
-
-            printed += coilLengthPerStep;
-
-            const progressPercentage = Math.min((printed / totalPerimeter) * 100, 100).toFixed(2);
-            console.log(`Model: ${currentModel.modelName} ${progressPercentage}%`);
-
-            if (printed >= totalPerimeter) {
-                clearInterval(interval);
-                this.completedModels.push(this.printQueue.shift() as Figure);
-                callback(null, currentModel);
-
-                if (this.printQueue.length > 0) {
-                    this.startPrinting(callback);
-                }
-            }
-        }, this.printingSpeed);
+            }, this.printingSpeed);
+        });
     }
 
-    stopPrint(): void {
+    stopPrint(): string {
         this.isPrintStarted = false;
-        console.log(`Printing of ${this.printQueue[0]?.modelName} cancelled.`);
+        this.printQueue[0].status = 'created'
+        return `Printing of ${this.printQueue[0]?.modelName || 'unknown model'} cancelled.`;
     }
 }

@@ -4,7 +4,7 @@ import { Figure } from "@/models/Figure";
 
  class FigureRep {
     async post(figure: FigureProps) {
-        const newFigure = new Figure(figure.modelName, figure.perimetr, figure.creatingTime, figure.color);
+        const newFigure = new Figure(figure.modelName, figure.perimetr, figure.color);
         const { data, error, loading, fetchData } = useFetch<Figure>('figures', 'post', newFigure);
 
         await fetchData();  

@@ -26,6 +26,14 @@ main {
   gap: 50px;
 }
 
+.text {
+  padding: 2px 0 2px 0;
+  font-size: 14px;
+  margin: 0;
+}
+
+
+
 .no_data {
   text-align: center;
   margin-top: 20px;
