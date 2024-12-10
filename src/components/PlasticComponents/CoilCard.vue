@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Delete } from '@element-plus/icons-vue';
 
 defineProps({
   material: String,
@@ -6,6 +7,8 @@ defineProps({
   threadLength: Number,
   inUse: Boolean
 })
+
+
 </script>
 
 <template>
@@ -24,6 +27,8 @@ defineProps({
     <p class="text item">Color: {{ color }}</p>
     <template #footer>
       <el-button type="primary">use</el-button>
+      <el-button type="danger" :icon="Delete" circle />
+
     </template>
   </el-card>
 </template>

@@ -24,6 +24,8 @@ main {
   display: flex;
   justify-content: center;
   gap: 50px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .text {

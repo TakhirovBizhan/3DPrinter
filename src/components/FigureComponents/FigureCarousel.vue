@@ -19,8 +19,8 @@ onMounted(async () => {
     <el-carousel class="carousel" v-if="figures.length > 0" :autoplay="false" trigger="click" arrows="always"
       indicator-position="none">
       <el-carousel-item class="content" v-for="figure in figures" :key="figure.id">
-        <FigureCard :modelName="figure.modelName" :perimetr="figure.perimetr" :creating-date="figure.creatingDate"
-          :color="figure.color" />
+        <FigureCard :status="figure.status" :id="figure.id" :modelName="figure.modelName" :perimetr="figure.perimetr"
+          :creating-date="figure.creatingDate" :color="figure.color" />
       </el-carousel-item>
     </el-carousel>
 

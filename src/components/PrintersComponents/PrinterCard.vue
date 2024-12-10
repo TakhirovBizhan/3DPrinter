@@ -1,9 +1,12 @@
 <script setup lang="ts">
 
+import { Delete } from '@element-plus/icons-vue';
+
+
 defineProps({
   mark: String,
   articule: String,
-  plasticCoil: String,
+  plasticCoil: { type: String, default: 'No coil' },
   isPrintStarted: Boolean,
   printingSpeed: Number,
   modelQueue: []
@@ -25,7 +28,8 @@ defineProps({
     <p class="text">printing speed: {{ printingSpeed }}</p>
     <template #footer>
       <el-button type="primary">Use</el-button>
-      <el-button type="info">Config</el-button>
+      <el-button type="danger" :icon="Delete" circle />
+
     </template>
   </el-card>
 </template>

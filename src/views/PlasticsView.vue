@@ -30,6 +30,7 @@ import CoilList from '@/components/PlasticComponents/CoilList.vue';
   display: flex;
   justify-content: center;
   gap: 30px;
+  flex-wrap: wrap;
 }
 
 .container__form {

@@ -2,22 +2,36 @@ import { useFetch } from "@/hooks/useFetch";
 import type { FigureProps } from "@/models/dataProps";
 import { Figure } from "@/models/Figure";
 
- class FigureRep {
-    async post(figure: FigureProps) {
-        const newFigure = new Figure(figure.modelName, figure.perimetr, figure.color);
-        const { data, error, loading, fetchData } = useFetch<Figure>('figures', 'post', newFigure);
+class FigureRep {
+  async post(figure: FigureProps) {
+    const newFigure = new Figure(figure.modelName, figure.perimetr, figure.color);
+    const { data, error, loading, fetchData } = useFetch<Figure>('figures', 'post', newFigure);
 
-        await fetchData();  
-        return { data: data.value, error: error.value, loading: loading.value }; 
+    await fetchData();  
+    return { data: data.value, error: error.value, loading: loading.value }; 
+  }
+
+  async get() {
+    const { data, error, loading, fetchData } = useFetch<Figure[]>('figures', 'get');
+    await fetchData();
+
+    return { data: data.value, error: error.value, loading: loading.value }; 
+  }
+
+  async delete(id: string) {
+    const { error, loading, fetchData } = useFetch<null>(`figures/${id}`, 'delete');
+    await fetchData();
+    return { error: error.value, loading: loading.value };
+  }
+
+  async fetchAllToPinia(figureStore: { setError: (error: string | null) => void; setFigures: (figures: Figure[]) => void }) {
+    const { data, error } = await this.get();
+    if (error) {
+      figureStore.setError(error);
+    } else if (data) {
+      figureStore.setFigures(data);
     }
-
-    async get() {
-        const { data, error, loading, fetchData } = useFetch<Figure>('figures', 'get');
-        
-        await fetchData();
-
-        return { data: data.value, error: error.value, loading: loading.value }; 
-    }
+  }
 }
 
 export const figureRep = new FigureRep();
