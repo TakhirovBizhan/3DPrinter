@@ -49,41 +49,54 @@ const rules = reactive<FormRules>({
 // Методы формы
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
-  
-  await formEl.validate(async (valid) => { 
+
+  await formEl.validate(async (valid) => {
     if (valid) {
       try {
-        const { data, error } = await printerRep.post(ruleForm); 
-        
+        const { data, error } = await printerRep.post(ruleForm);
+
         if (error) {
           ElNotification({
-            title: 'Error',
             message: `Error type: ${error}`,
             type: 'error',
-          });
+            customClass: 'message-error',
+            duration: 2000,
+            position: 'bottom-right',
+            showClose: false
+          })
         }
-        
+
         if (data) {
           ElNotification({
-            title: 'Success',
             message: 'Data submitted successfully',
             type: 'success',
-          });
+            customClass: 'message-error',
+            duration: 2000,
+            position: 'bottom-right',
+            showClose: false
+          })
           resetForm(formEl);
         }
       } catch (err) {
         ElNotification({
-          title: 'Error',
-          message: `Unexpected error: ${err}`,
+          message: `Error type: ${err}`,
           type: 'error',
-        });
+          customClass: 'message-error',
+          duration: 2000,
+          position: 'bottom-right',
+          showClose: false
+        })
+
       }
     } else {
       ElNotification({
-        title: 'Error',
-        message: `Validation failed`,
+        message: `Validation error!`,
         type: 'error',
-      });
+        customClass: 'message-error',
+        duration: 2000,
+        position: 'bottom-right',
+        showClose: false
+      })
     }
   });
 };

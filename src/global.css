@@ -1,0 +1,29 @@
+.message-error {
+    color: red;
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.241);
+    border-radius: 10px;
+    gap: 6px;
+    border: 1px solid var(--el-border-color-light);
+    padding: 4px 20px;
+    height: fit-content;
+    position: fixed;
+    bottom: 40px;
+    right: 240px;
+  }
+  
+  .message-success {
+    color: rgb(0, 158, 0);
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.241);
+    border-radius: 10px;
+    gap: 6px;
+    border: 1px solid var(--el-border-color-light);
+    padding: 4px 20px;
+    height: fit-content;
+    position: fixed;
+    bottom: 40px;
+    right: 240px;
+  }

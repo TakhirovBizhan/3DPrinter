@@ -2,7 +2,7 @@
 import { reactive, ref } from 'vue';
 import type { FormRules } from 'element-plus';
 import { plasticRep } from '@/repositories/PlasticRep';
-import { ElMessage } from 'element-plus';
+import { ElNotification } from 'element-plus';
 import type { PlasticProps } from '@/models/dataProps';
 
 // Инициализация формы
@@ -28,7 +28,7 @@ const rules = reactive<FormRules<PlasticProps>>({
   ],
 });
 
-const formRef = ref(); 
+const formRef = ref();
 
 const submitForm = async () => {
   if (!formRef.value) return;
@@ -37,11 +37,34 @@ const submitForm = async () => {
     if (valid) {
       const { error } = await plasticRep.post(form);
       if (!error) {
-        ElMessage.success('Plastic coil added successfully!');
+        ElNotification({
+          message: 'Plastic coil added succesfully!',
+          type: 'success',
+          customClass: 'message-success',
+          duration: 2000,
+          position: 'bottom-right',
+          showClose: false
+        })
         Object.assign(form, { material: '', color: '', threadLength: 0 });
       } else {
-        ElMessage.error('Failed to add plastic coil.');
+        ElNotification({
+          message: 'failed to add plastic coil!',
+          type: 'error',
+          customClass: 'message-error',
+          duration: 2000,
+          position: 'bottom-right',
+          showClose: false
+        })
       }
+    } else {
+      ElNotification({
+        message: 'failed to validate!',
+        type: 'error',
+        customClass: 'message-error',
+        duration: 2000,
+        position: 'bottom-right',
+        showClose: false
+      })
     }
   });
 };
@@ -52,15 +75,10 @@ const submitForm = async () => {
     <el-form-item label="Material" prop="material">
       <el-input v-model="form.material" placeholder="Enter coil material" />
     </el-form-item>
-    
+
     <el-form-item label="Color" prop="color">
       <el-select v-model="form.color" placeholder="Select a color">
-        <el-option
-          v-for="color in allowedColors"
-          :key="color"
-          :label="color"
-          :value="color"
-        />
+        <el-option v-for="color in allowedColors" :key="color" :label="color" :value="color" />
       </el-select>
     </el-form-item>
 

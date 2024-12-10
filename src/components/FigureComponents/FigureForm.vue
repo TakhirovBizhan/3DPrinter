@@ -32,36 +32,43 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         const { data, error } = await figureRep.post(ruleForm);
         if (error) {
           ElNotification({
-            title: 'Error',
             message: `Error type: ${error}`,
             type: 'error',
-            zIndex: 9999,
-            position: 'top-right'
+            customClass: 'message-error',
+            duration: 2000,
+            position: 'bottom-right',
+            showClose: false
           })
         } if (data) {
           ElNotification({
-            title: 'Success',
+            customClass: 'message-error',
             message: 'Data submitted successfully',
             type: 'success',
-            zIndex: 9999,
-            position: 'top-right'
+            duration: 2000,
+            position: 'bottom-right',
+            showClose: false
           })
           resetForm(formEl)
         }
       } catch (err) {
         ElNotification({
-          title: 'Error',
           message: `Error type: ${err}`,
           type: 'error',
-          zIndex: 9999,
-          position: 'top-right'
+          customClass: 'message-error',
+          duration: 2000,
+          position: 'bottom-right',
+          showClose: false
         })
+
       }
     } else {
       ElNotification({
-        title: 'Prompt',
-        message: 'This is a message that does not automatically close',
-        duration: 0,
+        message: `Validation error!`,
+        type: 'error',
+        customClass: 'message-error',
+        duration: 2000,
+        position: 'bottom-right',
+        showClose: false
       })
     }
   });
@@ -92,12 +99,4 @@ const resetForm = (formEl: FormInstance | undefined) => {
   </el-form>
 </template>
 
-<style>
-.el-message {
-  background-color: black !important;
-  height: fit-content !important;
-  position: fixed !important;
-  z-index: 9999 !important;
-
-}
-</style>
+<style></style>

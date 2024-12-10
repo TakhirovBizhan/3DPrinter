@@ -23,6 +23,18 @@
       "material": "plymerph",
       "color": "red",
       "threadLength": 12
+    },
+    {
+      "id": "ba50",
+      "material": "smth",
+      "color": "blue",
+      "threadLength": 2
+    },
+    {
+      "id": "d3fc",
+      "material": "magic band",
+      "color": "yellow",
+      "threadLength": 24
     }
   ]
 }
