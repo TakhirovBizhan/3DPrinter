@@ -19,7 +19,7 @@ class PrinterRep {
   }
 
   async delete(id: string) {
-    const { error, loading, fetchData } = useFetch<null>(`prniters/${id}`, 'delete');
+    const { error, loading, fetchData } = useFetch<null>(`printers/${id}`, 'delete');
     await fetchData();
     return { error: error.value, loading: loading.value };
   }

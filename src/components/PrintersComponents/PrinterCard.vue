@@ -1,9 +1,17 @@
 <script setup lang="ts">
 
+import { usePrinterStore } from '@/store/PrinterStore';
 import { Delete } from '@element-plus/icons-vue';
+
+const printerStore = usePrinterStore();
+
+const deletePrinter = async (id: string) => {
+  printerStore.deletePrinter(id);
+}
 
 
 defineProps({
+  id: { type: String, required: true },
   mark: String,
   articule: String,
   plasticCoil: { type: String, default: 'No coil' },
@@ -30,7 +38,8 @@ defineProps({
     <p class="text">printing speed: {{ printingSpeed }}</p>
     <template #footer>
       <el-button type="primary">Use</el-button>
-      <el-button type="danger" :icon="Delete" circle />
+      <el-button :loading="printerStore.loading" :disabled="isPrintStarted" @click="() => deletePrinter(id)"
+        type="danger" :icon="Delete" circle />
 
     </template>
   </el-card>

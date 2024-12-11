@@ -100,5 +100,3 @@ const resetForm = (formEl: FormInstance | undefined) => {
     </el-form-item>
   </el-form>
 </template>
-
-<style></style>

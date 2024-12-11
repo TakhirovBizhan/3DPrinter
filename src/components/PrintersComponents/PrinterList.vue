@@ -1,25 +1,24 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { printerRep } from '@/repositories/PrinterRep';
+import { onMounted } from 'vue';
 import PrinterCard from '../PrintersComponents/PrinterCard.vue';
-import type { Printer } from '@/models/Printer';
+import { usePrinterStore } from '@/store/PrinterStore';
 
-const printers = ref<Printer[]>([]);
+const printerStore = usePrinterStore();
+
 
 onMounted(async () => {
-    const { data, error } = await printerRep.get();
-    if (!error && Array.isArray(data)) {
-        printers.value = data;
-    }
+    await printerStore.fetchPrinters();
 });
+
+
 </script>
 
 <template>
     <div>
-        <ul class="list" v-if="printers.length > 0">
-            <li v-for="printer in printers" :key="printer.id">
-                <PrinterCard :mark="printer.mark" :articule="printer.articule" :printing-speed="printer.printingSpeed"
-                    :is-print-started="printer.isPrintStarted" />
+        <ul class="list" v-if="printerStore.totalPrinters > 0">
+            <li v-for="printer in printerStore.printers" :key="printer.id">
+                <PrinterCard :id='printer.id' :mark="printer.mark" :articule="printer.articule"
+                    :printing-speed="printer.printingSpeed" :is-print-started="printer.isPrintStarted" />
             </li>
         </ul>
         <p v-else class="no_data">
