@@ -1,5 +1,14 @@
 {
-  "figures": [],
+  "figures": [
+    {
+      "id": "98a8c012-120b-49d3-9937-2e02be1d59da",
+      "creatingDate": "Dec 11, 13:56",
+      "status": "created",
+      "modelName": "cube",
+      "perimetr": 4,
+      "color": "black"
+    }
+  ],
   "printers": [
     {
       "id": "645f",
@@ -14,18 +23,6 @@
       "material": "plymerph",
       "color": "red",
       "threadLength": 12
-    },
-    {
-      "id": "ba50",
-      "material": "smth",
-      "color": "blue",
-      "threadLength": 2
-    },
-    {
-      "id": "d3fc",
-      "material": "magic band",
-      "color": "yellow",
-      "threadLength": 24
     }
   ]
 }

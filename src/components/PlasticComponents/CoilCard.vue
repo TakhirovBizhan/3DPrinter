@@ -1,13 +1,20 @@
 <script setup lang="ts">
+import { usePlasticStore } from '@/store/PlasticStore';
 import { Delete } from '@element-plus/icons-vue';
 
 defineProps({
+  id: { type: String, required: true },
   material: String,
   color: String,
   threadLength: Number,
   inUse: Boolean
 })
 
+const plasticStore = usePlasticStore();
+
+const deletePlastic = async (id: string) => {
+  plasticStore.deletePlastic(id);
+}
 
 </script>
 
@@ -27,7 +34,8 @@ defineProps({
     <p class="text item">Color: {{ color }}</p>
     <template #footer>
       <el-button type="primary">use</el-button>
-      <el-button type="danger" :icon="Delete" circle />
+      <el-button type="danger" :disabled="inUse" :loading="plasticStore.loading" @click="() => deletePlastic(id)"
+        :icon="Delete" circle />
 
     </template>
   </el-card>

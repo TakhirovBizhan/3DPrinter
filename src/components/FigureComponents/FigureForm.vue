@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { ElNotification, type ComponentSize, type FormInstance, type FormRules } from 'element-plus'
+import { ElNotification, type FormInstance, type FormRules } from 'element-plus'
 import type { FigureProps } from '@/models/dataProps'
-import { figureRep } from '@/repositories/FigureRep';
+import { useFigureStore } from '@/store/FigureStore';
+
+
+const figureStore = useFigureStore();
 
 // Форма
-const formSize = ref<ComponentSize>('default')
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive<FigureProps>({
   modelName: '',
@@ -29,19 +31,19 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   await formEl.validate(async (valid) => {
     if (valid) {
       try {
-        const { data, error } = await figureRep.post(ruleForm);
-        if (error) {
+        await figureStore.addFigure(ruleForm);
+        if (figureStore.error) {
           ElNotification({
-            message: `Error type: ${error}`,
+            message: `Error type: ${figureStore.error}`,
             type: 'error',
             customClass: 'message-error',
             duration: 2000,
             position: 'bottom-right',
             showClose: false
           })
-        } if (data) {
+        } else {
           ElNotification({
-            customClass: 'message-error',
+            customClass: 'message-success',
             message: 'Data submitted successfully',
             type: 'success',
             duration: 2000,
@@ -81,7 +83,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
 
 <template>
   <el-form ref="ruleFormRef" style="max-width: 380px" :model="ruleForm" :rules="rules" label-width="auto"
-    class="demo-ruleForm" :size="formSize" status-icon>
+    class="demo-ruleForm" status-icon>
     <el-form-item label="Model Name" prop="modelName">
       <el-input v-model="ruleForm.modelName" />
     </el-form-item>
@@ -91,7 +93,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="submitForm(ruleFormRef)">
+      <el-button :loading="figureStore.loading" type="primary" @click="submitForm(ruleFormRef)">
         Create
       </el-button>
       <el-button @click="resetForm(ruleFormRef)">Reset</el-button>

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { figureRep } from '@/repositories/FigureRep';
 import type { Figure } from '@/models/Figure';
+import type { FigureProps } from '@/models/dataProps';
 
 export const useFigureStore = defineStore('figureStore', () => {
   const figures = ref<Figure[]>([]);
@@ -26,7 +27,7 @@ export const useFigureStore = defineStore('figureStore', () => {
     loading.value = false;
   }
 
-  async function addFigure(figure: Figure) {
+  async function addFigure(figure: FigureProps) {
     loading.value = true;
     error.value = null;
 

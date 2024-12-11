@@ -1,24 +1,22 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import type { PlasticCoil } from '@/models/PlasticCoil';
-import { plasticRep } from '@/repositories/PlasticRep';
+import { onMounted } from 'vue';
 import CoilCard from '../PlasticComponents/CoilCard.vue';
+import { usePlasticStore } from '@/store/PlasticStore';
 
-const coils = ref<PlasticCoil[]>([]);
+const plasticStore = usePlasticStore();
+
 
 onMounted(async () => {
-    const { data, error } = await plasticRep.get();
-    if (!error && Array.isArray(data)) {
-        coils.value = data;
-    }
+    await plasticStore.fetchPlastics();
 });
 </script>
 
 <template>
     <div>
-        <ul class="list" v-if="coils.length > 0">
-            <li v-for="coil in coils" :key="coil.id">
-                <CoilCard :material="coil.material" :color="coil.color" :thread-length="coil.threadLength" />
+        <ul class="list" v-if="plasticStore.totalPlastics > 0">
+            <li v-for="coil in plasticStore.plastics" :key="coil.id">
+                <CoilCard :id="coil.id" :material="coil.material" :color="coil.color"
+                    :thread-length="coil.threadLength" />
             </li>
         </ul>
         <p v-else class="no_data">

@@ -7,7 +7,7 @@ import FigureList from '@/components/FigureComponents/FigureList.vue';
 <template>
   <main>
     <div class="wrapper">
-      <h2>Models</h2>
+      <h2>Figures</h2>
       <div class="container">
         <FigureList />
         <div class="container__form">
