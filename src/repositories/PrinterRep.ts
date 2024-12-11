@@ -1,20 +1,29 @@
 import { useFetch } from "@/hooks/useFetch";
 import type { PrinterProps } from "@/models/dataProps";
+import { Printer } from "@/models/Printer";
 
 class PrinterRep {
   async post(printer: PrinterProps) {
-    const { data, error, loading, fetchData } = useFetch<PrinterProps>('printers', 'post', printer);
+    const newPrinter = new Printer(printer.articule, printer.mark, printer.printingSpeed)
+    const { data, error, loading, fetchData } = useFetch<Printer>('printers', 'post', newPrinter);
     
     await fetchData();  
     return { data: data.value, error: error.value, loading: loading.value }; 
   }
 
   async get() {
-    const { data, error, loading, fetchData } = useFetch<PrinterProps>('printers', 'get');
+    const { data, error, loading, fetchData } = useFetch<Printer[]>('printers', 'get');
     
     await fetchData();  
     return { data: data.value, error: error.value, loading: loading.value }; 
   }
+
+  async delete(id: string) {
+    const { error, loading, fetchData } = useFetch<null>(`prniters/${id}`, 'delete');
+    await fetchData();
+    return { error: error.value, loading: loading.value };
+  }
 }
+
 
 export const printerRep = new PrinterRep();
