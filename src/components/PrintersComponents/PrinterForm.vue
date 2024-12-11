@@ -29,7 +29,6 @@ const rules = reactive<FormRules<PrinterProps>>({
   ],
 });
 
-// Методы формы
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate(async (valid) => {

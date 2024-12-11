@@ -8,6 +8,8 @@ import { useFigureStore } from '@/store/FigureStore';
 const figureStore = useFigureStore();
 
 // Форма
+const dialogFormVisible = ref(false)
+
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive<FigureProps>({
   modelName: '',
@@ -82,21 +84,26 @@ const resetForm = (formEl: FormInstance | undefined) => {
 </script>
 
 <template>
-  <el-form ref="ruleFormRef" style="max-width: 380px" :model="ruleForm" :rules="rules" label-width="auto"
-    class="demo-ruleForm" status-icon>
-    <el-form-item label="Model Name" prop="modelName">
-      <el-input v-model="ruleForm.modelName" />
-    </el-form-item>
+  <el-button plain @click="dialogFormVisible = true">
+    add new
+  </el-button>
+  <el-dialog v-model="dialogFormVisible" title="Shipping address" width="500">
+    <el-form ref="ruleFormRef" style="max-width: 380px" :model="ruleForm" :rules="rules" label-width="auto"
+      class="demo-ruleForm" status-icon>
+      <el-form-item label="Model Name" prop="modelName">
+        <el-input v-model="ruleForm.modelName" />
+      </el-form-item>
 
-    <el-form-item label="Perimeter (mm)" prop="perimetr">
-      <el-input-number v-model="ruleForm.perimetr" :min="1" :precision="2" :step="0.1" />
-    </el-form-item>
+      <el-form-item label="Perimeter (mm)" prop="perimetr">
+        <el-input-number v-model="ruleForm.perimetr" :min="1" :precision="2" :step="0.1" />
+      </el-form-item>
 
-    <el-form-item>
-      <el-button :loading="figureStore.loading" type="primary" @click="submitForm(ruleFormRef)">
-        Create
-      </el-button>
-      <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
-    </el-form-item>
-  </el-form>
+      <el-form-item>
+        <el-button :loading="figureStore.loading" type="primary" @click="submitForm(ruleFormRef)">
+          Create
+        </el-button>
+        <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
+      </el-form-item>
+    </el-form>
+  </el-dialog>
 </template>

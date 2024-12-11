@@ -7,13 +7,22 @@ import FigureList from '@/components/FigureComponents/FigureList.vue';
 <template>
   <main>
     <div class="wrapper">
-      <h2>Figures</h2>
+      <div class="title__block">
+        <h2>Figures</h2>
+        <FigureForm />
+      </div>
       <div class="container">
         <FigureList />
-        <div class="container__form">
-          <FigureForm />
-        </div>
       </div>
     </div>
   </main>
 </template>
+
+<style>
+.title__block {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+
+}
+</style>

@@ -25,7 +25,7 @@ onMounted(async () => {
     </div>
 </template>
 
-<style>
+<style scoped>
 .list {
     display: flex;
     flex-wrap: wrap;
