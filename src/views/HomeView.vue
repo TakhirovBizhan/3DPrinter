@@ -12,34 +12,8 @@ import ModelCarousel from '@/components/FigureComponents/FigureCarousel.vue';
   </main>
 </template>
 
-<style>
+<style scoped>
 main {
-  min-height: 81.5vh;
-  margin: auto;
-  max-width: 1440px;
-  padding-left: 8px;
-  padding-right: 8px;
   margin-top: 30px;
-  margin-bottom: 30px;
-  display: flex;
-  justify-content: center;
-  gap: 50px;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.text {
-  padding: 2px 0 2px 0;
-  font-size: 14px;
-  margin: 0;
-}
-
-
-
-.no_data {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 18px;
-  color: #ca1111;
 }
 </style>

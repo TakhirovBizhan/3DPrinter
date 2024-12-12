@@ -24,6 +24,13 @@ class FigureRep {
     return { error: error.value, loading: loading.value };
   }
 
+  async updateStatus(id: string, value: 'created' | 'in proccess' | 'ready') {
+    const body = { status: value };
+    const { error, loading, fetchData } = useFetch<Figure>(`figures/${id}`, 'patch', body);
+    await fetchData();
+    return { error: error.value, loading: loading.value };
+  }
+
   async fetchAllToPinia(figureStore: { setError: (error: string | null) => void; setFigures: (figures: Figure[]) => void }) {
     const { data, error } = await this.get();
     if (error) {

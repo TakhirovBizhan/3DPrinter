@@ -10,6 +10,10 @@ async function deleteFigure(id: string) {
   await figureStore.deleteFigure(id);
 }
 
+async function updateFigureStatus(id: string, status: FigureStatus) {
+  await figureStore.updateStatus(id, status)
+}
+
 defineProps({
   id: { type: String, required: true },
   status: { type: String as () => FigureStatus, required: true },
@@ -35,8 +39,17 @@ defineProps({
     <p class="text">Creating date: {{ creatingDate }}</p>
     <template #footer>
       <el-button type="primary">use</el-button>
-      <el-button :loading="figureStore.loading" :disabled="status === 'in proccess'" @click="() => deleteFigure(id)"
+      <el-button v-if="status !== 'in proccess'" :loading="figureStore.loading" @click="() => deleteFigure(id)"
         type="danger" :icon="Delete" circle />
+      <el-popover v-if="status === 'in proccess'" placement="top-start" title="Warning!" :width="200" trigger="hover"
+        content="If you want to delete this figure you have to first wait or cancel printing">
+        <template #reference>
+          <el-button disabled type="danger" :icon="Delete" circle />
+        </template>
+      </el-popover>
+      <el-button v-if="status === 'ready'" plain type="danger" @click="() => updateFigureStatus(id, 'created')"
+        round>Remove
+        from list</el-button>
     </template>
   </el-card>
 </template>

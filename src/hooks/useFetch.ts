@@ -4,7 +4,7 @@ import axios from 'axios';
 type Methods = 'get' | 'post' | 'put' | 'patch' | 'delete';
 const BASE_URL = "http://localhost:3000";
 
-export function useFetch<T>(url: string, method: Methods, body?: T) {
+export function useFetch<T>(url: string, method: Methods, body?: Partial<T>) {
     const data = ref<T | null>(null);
     const error = ref<string | null>(null);
     const loading = ref<boolean>(false); 
