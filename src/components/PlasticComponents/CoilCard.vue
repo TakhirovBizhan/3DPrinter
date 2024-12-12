@@ -35,7 +35,6 @@ const deletePlastic = async (id: string) => {
     <p class="text item">thread length: {{ threadLength }}</p>
     <p class="text item">Color: {{ color }}</p>
     <template #footer>
-      <el-button type="primary">use</el-button>
       <el-button type="danger" :disabled="inUse" :loading="plasticStore.loading" @click="() => deletePlastic(id)"
         :icon="Delete" circle />
 

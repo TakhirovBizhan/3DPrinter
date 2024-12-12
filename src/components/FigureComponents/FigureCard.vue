@@ -14,6 +14,10 @@ async function updateFigureStatus(id: string, status: FigureStatus) {
   await figureStore.updateStatus(id, status)
 }
 
+async function addFigure(modelName: string, perimetr: number) {
+  await figureStore.addFigure({ modelName, perimetr })
+}
+
 defineProps({
   id: { type: String, required: true },
   status: { type: String as () => FigureStatus, required: true },
@@ -29,7 +33,6 @@ defineProps({
     <template #header>
       <h4>Figure: {{ modelName }}</h4>
     </template>
-
     <svg width="200" height="200" viewBox="0 0 443 616" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M147.5 154L275.239 500.5H19.7613L147.5 154Z" :fill="color || 'black'" />
       <path d="M295.5 462L423.239 115.5H167.761L295.5 462Z" :fill="color || 'black'" />
@@ -38,7 +41,6 @@ defineProps({
     <p class="text">Perimetr: {{ perimetr }}</p>
     <p class="text">Creating date: {{ creatingDate }}</p>
     <template #footer>
-      <el-button type="primary">use</el-button>
       <el-button v-if="status !== 'in proccess'" :loading="figureStore.loading" @click="() => deleteFigure(id)"
         type="danger" :icon="Delete" circle />
       <el-popover v-if="status === 'in proccess'" placement="top-start" title="Warning!" :width="200" trigger="hover"
@@ -50,6 +52,7 @@ defineProps({
       <el-button v-if="status === 'ready'" plain type="danger" @click="() => updateFigureStatus(id, 'created')"
         round>Remove
         from list</el-button>
+      <el-button type="primary" @click="() => addFigure(modelName, perimetr)" round>Copy</el-button>
     </template>
   </el-card>
 </template>
