@@ -7,6 +7,8 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AvailableFigures: typeof import('./src/components/PrintersComponents/AvailableFigures.vue')['default']
+    AvilableFigures: typeof import('./src/components/PrintersComponents/AvilableFigures.vue')['default']
     CoilCard: typeof import('./src/components/PlasticComponents/CoilCard.vue')['default']
     CoilCarousel: typeof import('./src/components/PlasticComponents/CoilCarousel.vue')['default']
     CoilForm: typeof import('./src/components/PlasticComponents/CoilForm.vue')['default']
@@ -30,6 +32,8 @@ declare module 'vue' {
     ElOption: typeof import('element-plus/es')['ElOption']
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElSelect: typeof import('element-plus/es')['ElSelect']
+    ElTable: typeof import('element-plus/es')['ElTable']
+    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTransfer: typeof import('element-plus/es')['ElTransfer']
     FigureCard: typeof import('./src/components/FigureComponents/FigureCard.vue')['default']
@@ -44,6 +48,7 @@ declare module 'vue' {
     PrinterCarousel: typeof import('./src/components/PrintersComponents/PrinterCarousel.vue')['default']
     PrinterForm: typeof import('./src/components/PrintersComponents/PrinterForm.vue')['default']
     PrinterList: typeof import('./src/components/PrintersComponents/PrinterList.vue')['default']
+    PrintQueue: typeof import('./src/components/PrintersComponents/PrintQueue.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheFooter: typeof import('./src/components/TheFooter.vue')['default']

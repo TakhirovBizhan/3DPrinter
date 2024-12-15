@@ -25,9 +25,9 @@ class PrinterRep {
     return { error: error.value, loading: loading.value };
   }
 
-  async updatePrintQueue(id: string, queue: Figure[]) {
-    const body = { printQueue: queue };
-    const { error, loading, fetchData } = useFetch<Printer>(`printers/${id}`, 'patch', body);
+  async  addToQueue(printerId: string, arrayName: 'printQueue' | 'completedModels', figure: Figure) {
+    const url = `printers/${printerId}/${arrayName}`;
+    const { error, loading, fetchData } = useFetch<Figure>(url, 'patch', figure);
     await fetchData();
     return { error: error.value, loading: loading.value };
   }

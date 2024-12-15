@@ -7,15 +7,15 @@ class FigureRep {
     const newFigure = new Figure(figure.modelName, figure.perimetr, figure.color);
     const { data, error, loading, fetchData } = useFetch<Figure>('figures', 'post', newFigure);
 
-    await fetchData();  
-    return { data: data.value, error: error.value, loading: loading.value }; 
+    await fetchData();
+    return { data: data.value, error: error.value, loading: loading.value };
   }
 
   async get() {
     const { data, error, loading, fetchData } = useFetch<Figure[]>('figures', 'get');
     await fetchData();
 
-    return { data: data.value, error: error.value, loading: loading.value }; 
+    return { data: data.value, error: error.value, loading: loading.value };
   }
 
   async delete(id: string) {
@@ -30,6 +30,14 @@ class FigureRep {
     await fetchData();
     return { error: error.value, loading: loading.value };
   }
+
+  async updatePrintStatus(id: string, value: boolean) {
+    const body = { inPrintQueue: value };
+    const { error, loading, fetchData } = useFetch<Figure>(`figures/${id}`, 'patch', body);
+    await fetchData();
+    return { error: error.value, loading: loading.value };
+  }
+
 
   async fetchAllToPinia(figureStore: { setError: (error: string | null) => void; setFigures: (figures: Figure[]) => void }) {
     const { data, error } = await this.get();

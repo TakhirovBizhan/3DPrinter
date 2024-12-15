@@ -4,10 +4,14 @@ import axios from 'axios';
 type Methods = 'get' | 'post' | 'put' | 'patch' | 'delete';
 const BASE_URL = "http://localhost:3000";
 
-export function useFetch<T>(url: string, method: Methods, body?: Partial<T>) {
+export function useFetch<T>(
+  url: string,
+  method: Methods,
+  body?: Partial<T> | Record<string, unknown>
+) {
     const data = ref<T | null>(null);
     const error = ref<string | null>(null);
-    const loading = ref<boolean>(false); 
+    const loading = ref<boolean>(false);
 
     const fetchData = async () => {
         loading.value = true;

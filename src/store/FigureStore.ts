@@ -55,6 +55,21 @@ export const useFigureStore = defineStore('figureStore', () => {
     loading.value = false;
   }
 
+  async function updatePrintStatus(id: string, status: boolean) {
+    loading.value = true;
+    error.value = null;
+
+    const { error: updateError } = await figureRep.updatePrintStatus(id, status);
+    if (updateError) {
+      error.value = updateError;
+    } else {
+      figures.value = figures.value.filter((figure) => figure.id !== id);
+    }
+
+    loading.value = false;
+  }
+
+
   async function deleteFigure(id: string) {
     loading.value = true;
     error.value = null;
@@ -77,6 +92,7 @@ export const useFigureStore = defineStore('figureStore', () => {
     totalFigures,
 
     // Expose actions
+    updatePrintStatus,
     fetchFigures,
     addFigure,
     deleteFigure,

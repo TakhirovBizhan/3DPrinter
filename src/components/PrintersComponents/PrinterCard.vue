@@ -39,7 +39,7 @@ defineProps({
     <p class="text">printing speed: {{ printingSpeed }}</p>
     <template #footer>
       <div class="footer__card">
-        <PrintConfig />
+        <PrintConfig :id="id" :articule="articule" />
         <div v-if="!isPrintStarted">
           <el-button :loading="printerStore.loading" :disabled="isPrintStarted" @click="() => deletePrinter(id)"
             type="danger" :icon="Delete" circle />

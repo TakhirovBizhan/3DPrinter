@@ -27,10 +27,10 @@ export const usePrinterStore = defineStore('printerStore', () => {
     loading.value = false;
   }
 
-  async function updatePrintQueue(id: string, queue: Figure[]) {
+  async function updatePrintQueue(id: string, figure: Figure) {
     loading.value = true;
     error.value = null;
-      const { error: updateError } = await printerRep.updatePrintQueue(id, queue);
+      const { error: updateError } = await printerRep.addToQueue(id, 'printQueue', figure);
 
       if (updateError) {
         error.value = updateError;

@@ -1,7 +1,14 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
+import AvilableFigures from './AvailableFigures.vue';
+import PrintQueue from './PrintQueue.vue'
 
 const dialogConfigVisible = ref(false);
+
+defineProps({
+  id: { type: String, required: true },
+  articule: String,
+});
 
 </script>
 
@@ -9,8 +16,10 @@ const dialogConfigVisible = ref(false);
   <el-button type="primary" @click="dialogConfigVisible = true">
     Print
   </el-button>
-  <el-dialog v-model="dialogConfigVisible" title="Printer Queue" width="600px">
+  <el-dialog v-model="dialogConfigVisible" :title="articule" width="600px">
     <div class="dialog">
+      <AvilableFigures :id="id" />
+      <PrintQueue :id="id" />
     </div>
   </el-dialog>
 </template>
@@ -18,9 +27,9 @@ const dialogConfigVisible = ref(false);
 <style>
 .dialog {
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .button {
