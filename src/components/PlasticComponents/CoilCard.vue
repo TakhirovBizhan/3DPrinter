@@ -7,7 +7,7 @@ defineProps({
   material: String,
   color: String,
   threadLength: Number,
-  inUse: Boolean
+  inUse: { type: Boolean, required: true }
 })
 
 const plasticStore = usePlasticStore();
@@ -35,8 +35,14 @@ const deletePlastic = async (id: string) => {
     <p class="text item">thread length: {{ threadLength }}</p>
     <p class="text item">Color: {{ color }}</p>
     <template #footer>
-      <el-button type="danger" :disabled="inUse" :loading="plasticStore.loading" @click="() => deletePlastic(id)"
+      <el-button v-if="!inUse" :loading="plasticStore.loading" @click="() => deletePlastic(id)" type="danger"
         :icon="Delete" circle />
+      <el-popover v-else placement="top-start" title="Warning!" :width="200" trigger="hover"
+        content="If you want to delete this plastic you have to remove it from printer!">
+        <template #reference>
+          <el-button disabled type="danger" :icon="Delete" circle />
+        </template>
+      </el-popover>
 
     </template>
   </el-card>

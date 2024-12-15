@@ -16,7 +16,8 @@ onMounted(async () => {
     <el-carousel class="carousel" :autoplay="false" trigger="click" arrows="always" indicator-position="none"
       v-if="plasticStore.totalPlastics > 0">
       <el-carousel-item class="content" v-for="coil in plasticStore.plastics" :key="coil.id">
-        <CoilCard :id="coil.id" :material="coil.material" :color="coil.color" :thread-length="coil.threadLength" />
+        <CoilCard :id="coil.id" :material="coil.material" :in-use="coil.inUse" :color="coil.color"
+          :thread-length="coil.threadLength" />
       </el-carousel-item>
     </el-carousel>
     <p v-else class="no_data">

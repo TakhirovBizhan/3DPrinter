@@ -43,10 +43,26 @@
   ],
   "printers": [
     {
-      "id": "645f",
-      "mark": "M-12",
-      "articule": "123.12.sz",
-      "printingSpeed": 6
+      "id": "5af6d9ab-b26f-49bd-b0bd-69584bf10996",
+      "isPrintStarted": true,
+      "mark": "1111",
+      "articule": "smth",
+      "plasticCoil": null,
+      "printingSpeed": 1,
+      "printQueue": [],
+      "completedModels": [],
+      "currentCoilId": null
+    },
+    {
+      "id": "26ffe618-552f-472f-9888-a06ac84a74ed",
+      "isPrintStarted": false,
+      "mark": "1234",
+      "articule": "L-2",
+      "plasticCoil": null,
+      "printingSpeed": 5,
+      "printQueue": [],
+      "completedModels": [],
+      "currentCoilId": null
     }
   ],
   "plastics": [
@@ -55,6 +71,27 @@
       "material": "gold",
       "color": "yellow",
       "threadLength": 5,
+      "inUse": false
+    },
+    {
+      "id": "4b3afe02-2e5b-450e-87d3-d73280c947b0",
+      "material": "silver",
+      "color": "blue",
+      "threadLength": 37,
+      "inUse": false
+    },
+    {
+      "id": "1b7a24dc-016f-434a-866e-10e99d524056",
+      "material": "polymorph",
+      "color": "black",
+      "threadLength": 100,
+      "inUse": false
+    },
+    {
+      "id": "581a6471-c6f0-4cd8-a8bc-97b994ac4498",
+      "material": "ezen",
+      "color": "green",
+      "threadLength": 78,
       "inUse": false
     }
   ]

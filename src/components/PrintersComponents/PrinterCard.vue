@@ -1,7 +1,8 @@
 <script setup lang="ts">
 
 import { usePrinterStore } from '@/store/PrinterStore';
-import { Delete } from '@element-plus/icons-vue';
+import { Delete, Edit } from '@element-plus/icons-vue';
+import PrintConfig from './PrintConfig.vue';
 
 const printerStore = usePrinterStore();
 
@@ -12,8 +13,8 @@ const deletePrinter = async (id: string) => {
 
 defineProps({
   id: { type: String, required: true },
-  mark: String,
   articule: String,
+  mark: String,
   plasticCoil: { type: String, default: 'No coil' },
   isPrintStarted: Boolean,
   printingSpeed: Number,
@@ -26,21 +27,39 @@ defineProps({
   <el-card class="card">
     <template #header>
       <div class="card__header">
-        <h4>Printer: {{ mark }}</h4>
+        <h4>Printer: {{ articule }}</h4>
         <el-button class="button__busy" v-if="isPrintStarted" type="danger" plain>Busy</el-button>
         <el-button class="button__not_busy" v-else type="success" plain>Not busy</el-button>
       </div>
     </template>
     <img src=https://cdn2.iconfinder.com/data/icons/robotics-butterscotch-vol-1/512/3D_Print-512.png
       style="width: 100%" />
-    <p class="article">article: {{ articule }}</p>
+    <p class="article">article: {{ mark }}</p>
     <p class="text">plastic coil: {{ plasticCoil }}</p>
     <p class="text">printing speed: {{ printingSpeed }}</p>
     <template #footer>
-      <el-button type="primary">Use</el-button>
-      <el-button :loading="printerStore.loading" :disabled="isPrintStarted" @click="() => deletePrinter(id)"
-        type="danger" :icon="Delete" circle />
-
+      <div class="footer__card">
+        <PrintConfig />
+        <div v-if="!isPrintStarted">
+          <el-button :loading="printerStore.loading" :disabled="isPrintStarted" @click="() => deletePrinter(id)"
+            type="danger" :icon="Delete" circle />
+          <el-button type="primary" :icon="Edit" circle />
+        </div>
+        <div v-else>
+          <el-popover placement="top-start" title="Warning!" :width="200" trigger="hover"
+            content="If you want to delete this printer you have to wait or cancel printing">
+            <template #reference>
+              <el-button disabled type="danger" :icon="Delete" circle />
+            </template>
+          </el-popover>
+          <el-popover placement="top-start" title="Warning!" :width="200" trigger="hover"
+            content="If you want to edit this printer you have to wait or cancel printing">
+            <template #reference>
+              <el-button type="primary" disabled :icon="Edit" circle />
+            </template>
+          </el-popover>
+        </div>
+      </div>
     </template>
   </el-card>
 </template>
@@ -49,6 +68,11 @@ defineProps({
 .card__header {
   display: flex;
   justify-content: space-between;
+}
+
+.footer__card {
+  display: flex;
+  gap: 12px;
 }
 
 

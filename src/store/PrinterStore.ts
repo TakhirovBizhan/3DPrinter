@@ -3,11 +3,12 @@ import { ref, computed } from 'vue';
 import { printerRep } from '@/repositories/PrinterRep';
 import type { PrinterProps } from '@/models/dataProps';
 import type { Printer } from '@/models/Printer';
+import type { Figure } from '@/models/Figure';
 
 export const usePrinterStore = defineStore('printerStore', () => {
-  const printers = ref<Printer[]>([]); 
-  const loading = ref(false); 
-  const error = ref<string | null>(null); 
+  const printers = ref<Printer[]>([]);
+  const loading = ref(false);
+  const error = ref<string | null>(null);
 
 
   const totalPrinters = computed(() => printers.value.length);
@@ -24,6 +25,20 @@ export const usePrinterStore = defineStore('printerStore', () => {
     }
 
     loading.value = false;
+  }
+
+  async function updatePrintQueue(id: string, queue: Figure[]) {
+    loading.value = true;
+    error.value = null;
+      const { error: updateError } = await printerRep.updatePrintQueue(id, queue);
+
+      if (updateError) {
+        error.value = updateError;
+      } else {
+        printers.value = printers.value.filter((printer) => printer.id !== id);
+      }
+
+      loading.value = false;
   }
 
   async function addPrinter(printer: PrinterProps) {
@@ -60,6 +75,7 @@ export const usePrinterStore = defineStore('printerStore', () => {
     error,
     totalPrinters,
 
+    updatePrintQueue,
     fetchPrinters,
     addPrinter,
     deletePrinter,

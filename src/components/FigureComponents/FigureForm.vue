@@ -87,8 +87,8 @@ const resetForm = (formEl: FormInstance | undefined) => {
   <el-button plain @click="dialogFormVisible = true">
     add new
   </el-button>
-  <el-dialog v-model="dialogFormVisible" title="Shipping address" width="500">
-    <el-form ref="ruleFormRef" style="max-width: 380px" :model="ruleForm" :rules="rules" label-width="auto"
+  <el-dialog v-model="dialogFormVisible" title="Figure form" width="360">
+    <el-form ref="ruleFormRef" style="max-width: 300px" :model="ruleForm" :rules="rules" label-width="auto"
       class="demo-ruleForm" status-icon>
       <el-form-item label="Model Name" prop="modelName">
         <el-input v-model="ruleForm.modelName" />

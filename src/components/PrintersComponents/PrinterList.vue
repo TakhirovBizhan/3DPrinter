@@ -7,22 +7,33 @@ const printerStore = usePrinterStore();
 
 
 onMounted(async () => {
-    await printerStore.fetchPrinters();
+  await printerStore.fetchPrinters();
 });
 
 
 </script>
 
 <template>
-    <div>
-        <ul class="list" v-if="printerStore.totalPrinters > 0">
-            <li v-for="printer in printerStore.printers" :key="printer.id">
-                <PrinterCard :id='printer.id' :mark="printer.mark" :articule="printer.articule"
-                    :printing-speed="printer.printingSpeed" :is-print-started="printer.isPrintStarted" />
-            </li>
-        </ul>
-        <p v-else class="no_data">
-            No data
-        </p>
-    </div>
+  <div>
+    <ul class="list" v-if="printerStore.totalPrinters > 0">
+      <li v-for="printer in printerStore.printers" :key="printer.id">
+        <PrinterCard :id='printer.id' :mark="printer.mark" :articule="printer.articule"
+          :printing-speed="printer.printingSpeed" :is-print-started="printer.isPrintStarted" />
+      </li>
+    </ul>
+    <p v-else class="no_data">
+      No data
+    </p>
+  </div>
 </template>
+
+<style>
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 830px;
+  padding: 0;
+  justify-content: center;
+}
+</style>
