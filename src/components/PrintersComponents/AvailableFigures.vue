@@ -1,52 +1,50 @@
 <script lang="ts" setup>
 import { useFigureStore } from '@/store/FigureStore';
 import { usePrinterStore } from '@/store/PrinterStore';
-import { onMounted } from 'vue';
+import { onMounted, computed } from 'vue';
 
 defineProps({
-  id: { type: String, required: true },
+  id: { type: String, required: true }, // ID принтера
 });
 
 const figureStore = useFigureStore();
 const printerStore = usePrinterStore();
 
 onMounted(async () => {
-  await figureStore.fetchFigures();
+  await figureStore.fetchFigures(); // Загрузка фигур
 });
 
-const handleClick = async (printerId: string, figureId: string) => {
-  const figure = figureStore.figures.find((f) => f.id === figureId);
-  if (!figure) {
-    console.error('Figure not found');
-    return;
+// Добавление фигуры в очередь
+const handleAdd = async (printerId: string, figureId: string) => {
+  await printerStore.updatePrintQueue(printerId, figureId);
+  if (!printerStore.error) {
+    await figureStore.updatePrintStatus(figureId, true);
+  } else {
+    console.error('Failed to add figure to queue');
   }
-  if (figure.inPrintQueue) {
-    console.error('Figure already in print queue');
-    return;
-  }
-  await printerStore.updatePrintQueue(printerId, figure);
-  await figureStore.updatePrintStatus(figureId, true);
 };
 
-const tableData = figureStore.figures
-  .filter((figure) => figure.status === 'created' && !figure.inPrintQueue)
-  .map((figure) => ({
-    id: figure.id,
-    name: figure.modelName,
-    perimetr: figure.perimetr,
-    date: figure.creatingDate,
-  }));
+const tableData = computed(() => {
+  return figureStore.figures
+    .filter((figure) => figure.status === 'created' && !figure.inPrintQueue)
+    .map((figure) => ({
+      id: figure.id,
+      name: figure.modelName,
+      perimetr: figure.perimetr,
+      date: figure.creatingDate,
+    }));
+});
 </script>
 
 <template>
-  <h3>Available figures</h3>
+  <h3>Available Figures</h3>
   <el-table :data="tableData" style="width: 100%">
     <el-table-column fixed prop="name" label="Name" width="120" />
     <el-table-column prop="perimetr" label="Perimetr" width="100" />
     <el-table-column prop="date" label="Date" width="150" />
     <el-table-column fixed="right" label="Operations" min-width="120">
       <template #default="{ row }">
-        <el-button type="primary" size="small" @click="handleClick(id, row.id)">
+        <el-button type="primary" size="small" @click="handleAdd(id, row.id)">
           Add +
         </el-button>
       </template>

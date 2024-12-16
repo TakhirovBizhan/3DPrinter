@@ -3,13 +3,11 @@ import { ref, computed } from 'vue';
 import { printerRep } from '@/repositories/PrinterRep';
 import type { PrinterProps } from '@/models/dataProps';
 import type { Printer } from '@/models/Printer';
-import type { Figure } from '@/models/Figure';
 
 export const usePrinterStore = defineStore('printerStore', () => {
   const printers = ref<Printer[]>([]);
   const loading = ref(false);
   const error = ref<string | null>(null);
-
 
   const totalPrinters = computed(() => printers.value.length);
 
@@ -27,18 +25,68 @@ export const usePrinterStore = defineStore('printerStore', () => {
     loading.value = false;
   }
 
-  async function updatePrintQueue(id: string, figure: Figure) {
+  async function updatePrintQueue(printerId: string, figureId: string) {
     loading.value = true;
     error.value = null;
-      const { error: updateError } = await printerRep.addToQueue(id, 'printQueue', figure);
+
+    const printerIndex = printers.value.findIndex((p) => p.id === printerId);
+
+    if (printerIndex === -1) {
+      error.value = 'Printer not found';
+      loading.value = false;
+      return;
+    }
+
+    const printer = printers.value[printerIndex];
+
+    if (!printer.printQueue.includes(figureId)) {
+      const updatedPrinter = {
+        ...printer,
+        printQueue: [...printer.printQueue, figureId],
+      };
+
+      const { error: updateError } = await printerRep.UpdateQueue(printerId, updatedPrinter);
 
       if (updateError) {
         error.value = updateError;
       } else {
-        printers.value = printers.value.filter((printer) => printer.id !== id);
+        printers.value.splice(printerIndex, 1, updatedPrinter); // Обновление массива
       }
+    }
 
+    loading.value = false;
+  }
+
+  async function removeFromPrintQueue(printerId: string, figureId: string) {
+    loading.value = true;
+    error.value = null;
+
+    const printerIndex = printers.value.findIndex((p) => p.id === printerId);
+
+    if (printerIndex === -1) {
+      error.value = 'Printer not found';
       loading.value = false;
+      return;
+    }
+
+    const printer = printers.value[printerIndex];
+
+    if (printer.printQueue.includes(figureId)) {
+      const updatedPrinter = {
+        ...printer,
+        printQueue: printer.printQueue.filter((id) => id !== figureId),
+      };
+
+      const { error: updateError } = await printerRep.UpdateQueue(printerId, updatedPrinter);
+
+      if (updateError) {
+        error.value = updateError;
+      } else {
+        printers.value.splice(printerIndex, 1, updatedPrinter); // Обновление массива
+      }
+    }
+
+    loading.value = false;
   }
 
   async function addPrinter(printer: PrinterProps) {
@@ -75,6 +123,7 @@ export const usePrinterStore = defineStore('printerStore', () => {
     error,
     totalPrinters,
 
+    removeFromPrintQueue,
     updatePrintQueue,
     fetchPrinters,
     addPrinter,

@@ -9,10 +9,8 @@ export const useFigureStore = defineStore('figureStore', () => {
   const loading = ref(false);
   const error = ref<string | null>(null);
 
-  // Computed property
   const totalFigures = computed(() => figures.value.length);
 
-  // Actions
   async function fetchFigures() {
     loading.value = true;
     error.value = null;
@@ -49,26 +47,37 @@ export const useFigureStore = defineStore('figureStore', () => {
     if (updateError) {
       error.value = updateError;
     } else {
-      figures.value = figures.value.filter((figure) => figure.id !== id);
+      const figureIndex = figures.value.findIndex((figure) => figure.id === id);
+      if (figureIndex !== -1) {
+        figures.value[figureIndex] = {
+          ...figures.value[figureIndex],
+          status,
+        };
+      }
     }
 
     loading.value = false;
   }
 
-  async function updatePrintStatus(id: string, status: boolean) {
+  async function updatePrintStatus(id: string, inPrintQueue: boolean) {
     loading.value = true;
     error.value = null;
 
-    const { error: updateError } = await figureRep.updatePrintStatus(id, status);
+    const { error: updateError } = await figureRep.updatePrintStatus(id, inPrintQueue);
     if (updateError) {
       error.value = updateError;
     } else {
-      figures.value = figures.value.filter((figure) => figure.id !== id);
+      const figureIndex = figures.value.findIndex((figure) => figure.id === id);
+      if (figureIndex !== -1) {
+        figures.value[figureIndex] = {
+          ...figures.value[figureIndex],
+          inPrintQueue,
+        };
+      }
     }
 
     loading.value = false;
   }
-
 
   async function deleteFigure(id: string) {
     loading.value = true;
@@ -85,17 +94,15 @@ export const useFigureStore = defineStore('figureStore', () => {
   }
 
   return {
-    // Expose state
     figures,
     loading,
     error,
     totalFigures,
 
-    // Expose actions
     updatePrintStatus,
     fetchFigures,
     addFigure,
     deleteFigure,
-    updateStatus
+    updateStatus,
   };
 });

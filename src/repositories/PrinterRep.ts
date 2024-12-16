@@ -1,6 +1,5 @@
 import { useFetch } from "@/hooks/useFetch";
 import type { PrinterProps } from "@/models/dataProps";
-import type { Figure } from "@/models/Figure";
 import { Printer } from "@/models/Printer";
 
 class PrinterRep {
@@ -25,10 +24,11 @@ class PrinterRep {
     return { error: error.value, loading: loading.value };
   }
 
-  async  addToQueue(printerId: string, arrayName: 'printQueue' | 'completedModels', figure: Figure) {
-    const url = `printers/${printerId}/${arrayName}`;
-    const { error, loading, fetchData } = useFetch<Figure>(url, 'patch', figure);
+  async  UpdateQueue(printerId: string, printer: Printer) {
+    const url = `printers/${printerId}`;
+    const { error, loading, fetchData } = useFetch<Printer>(url, 'put', printer);
     await fetchData();
+
     return { error: error.value, loading: loading.value };
   }
 }

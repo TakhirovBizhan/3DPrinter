@@ -1,13 +1,39 @@
 {
   "figures": [
-
+    {
+      "id": "a5310263-e8d4-4b67-9dfe-2cd9cf610052",
+      "creatingDate": "Dec 16, 21:11",
+      "status": "created",
+      "inPrintQueue": false,
+      "modelName": "cube",
+      "perimetr": 3,
+      "color": "black"
+    },
+    {
+      "id": "1dcb2459-e88b-4274-82d3-38dac02439ae",
+      "creatingDate": "Dec 17, 00:36",
+      "status": "created",
+      "inPrintQueue": false,
+      "modelName": "bike",
+      "perimetr": 12.3,
+      "color": "black"
+    },
+    {
+      "id": "0cb8d1a7-e901-47d4-a36d-45d6e9b3ad99",
+      "creatingDate": "Dec 17, 00:36",
+      "status": "created",
+      "inPrintQueue": false,
+      "modelName": "bike",
+      "perimetr": 12.3,
+      "color": "black"
+    }
   ],
   "printers": [
     {
       "id": "5af6d9ab-b26f-49bd-b0bd-69584bf10996",
-      "isPrintStarted": true,
+      "isPrintStarted": false,
       "mark": "1111",
-      "articule": "smth",
+      "articule": "G-3",
       "plasticCoil": null,
       "printingSpeed": 1,
       "printQueue": [],
