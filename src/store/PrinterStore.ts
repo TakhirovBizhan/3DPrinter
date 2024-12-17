@@ -3,11 +3,13 @@ import { ref, computed } from 'vue';
 import { printerRep } from '@/repositories/PrinterRep';
 import type { PrinterProps } from '@/models/dataProps';
 import type { Printer } from '@/models/Printer';
+import { usePlasticStore } from '@/store/PlasticStore';
 
 export const usePrinterStore = defineStore('printerStore', () => {
   const printers = ref<Printer[]>([]);
   const loading = ref(false);
   const error = ref<string | null>(null);
+  const plasticStore = usePlasticStore();
 
   const totalPrinters = computed(() => printers.value.length);
 
@@ -25,7 +27,7 @@ export const usePrinterStore = defineStore('printerStore', () => {
     loading.value = false;
   }
 
-  async function updatePrintQueue(printerId: string, figureId: string) {
+  async function updatePrintQueue(printerId: string, figureId: string, requiredLength: number) {
     loading.value = true;
     error.value = null;
 
@@ -38,6 +40,13 @@ export const usePrinterStore = defineStore('printerStore', () => {
     }
 
     const printer = printers.value[printerIndex];
+    const plastic = plasticStore.plastics.find((p) => p.id === printer.plasticId);
+
+    if (!plastic || plastic.threadLength < requiredLength) {
+      error.value = 'Not enough plastic to add figure to print queue';
+      loading.value = false;
+      return;
+    }
 
     if (!printer.printQueue.includes(figureId)) {
       const updatedPrinter = {
@@ -45,12 +54,12 @@ export const usePrinterStore = defineStore('printerStore', () => {
         printQueue: [...printer.printQueue, figureId],
       };
 
-      const { error: updateError } = await printerRep.UpdateQueue(printerId, updatedPrinter);
+      const { error: updateError } = await printerRep.update(printerId, updatedPrinter);
 
       if (updateError) {
         error.value = updateError;
       } else {
-        printers.value.splice(printerIndex, 1, updatedPrinter); // Обновление массива
+        printers.value.splice(printerIndex, 1, updatedPrinter);
       }
     }
 
@@ -77,12 +86,12 @@ export const usePrinterStore = defineStore('printerStore', () => {
         printQueue: printer.printQueue.filter((id) => id !== figureId),
       };
 
-      const { error: updateError } = await printerRep.UpdateQueue(printerId, updatedPrinter);
+      const { error: updateError } = await printerRep.update(printerId, updatedPrinter);
 
       if (updateError) {
         error.value = updateError;
       } else {
-        printers.value.splice(printerIndex, 1, updatedPrinter); // Обновление массива
+        printers.value.splice(printerIndex, 1, updatedPrinter);
       }
     }
 
@@ -117,6 +126,36 @@ export const usePrinterStore = defineStore('printerStore', () => {
     loading.value = false;
   }
 
+  async function updatePrinterPlastic(printerId: string, plasticId: string) {
+    loading.value = true;
+    error.value = null;
+
+    const printerIndex = printers.value.findIndex((p) => p.id === printerId);
+
+    if (printerIndex === -1) {
+      error.value = 'Printer not found';
+      loading.value = false;
+      return;
+    }
+
+    const printer = printers.value[printerIndex];
+
+    const updatedPrinter = {
+      ...printer,
+      plasticId,
+    };
+
+    const { error: updateError } = await printerRep.update(printerId, updatedPrinter);
+
+    if (updateError) {
+      error.value = updateError;
+    } else {
+      printers.value.splice(printerIndex, 1, updatedPrinter);
+    }
+
+    loading.value = false;
+  }
+
   return {
     printers,
     loading,
@@ -128,5 +167,7 @@ export const usePrinterStore = defineStore('printerStore', () => {
     fetchPrinters,
     addPrinter,
     deletePrinter,
+    updatePrinterPlastic,
   };
 });
+

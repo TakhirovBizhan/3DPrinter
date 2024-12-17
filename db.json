@@ -30,26 +30,24 @@
   ],
   "printers": [
     {
-      "id": "5af6d9ab-b26f-49bd-b0bd-69584bf10996",
+      "id": "31390f37-b35a-457d-ad44-7d86d3f32d23",
       "isPrintStarted": false,
-      "mark": "1111",
-      "articule": "G-3",
-      "plasticCoil": null,
-      "printingSpeed": 1,
+      "mark": "12345",
+      "articule": "L-12",
+      "plasticId": "1a7a4f64-9ab1-410e-be73-ae6880ce64d1",
+      "printingSpeed": 40,
       "printQueue": [],
-      "completedModels": [],
-      "currentCoilId": null
+      "completedModels": []
     },
     {
-      "id": "26ffe618-552f-472f-9888-a06ac84a74ed",
+      "id": "0157d545-d01c-41d4-abc3-c4acf65c25be",
       "isPrintStarted": false,
-      "mark": "1234",
-      "articule": "L-2",
-      "plasticCoil": null,
+      "mark": "t2123",
+      "articule": "T-2",
+      "plasticId": "581a6471-c6f0-4cd8-a8bc-97b994ac4498",
       "printingSpeed": 5,
       "printQueue": [],
-      "completedModels": [],
-      "currentCoilId": null
+      "completedModels": []
     }
   ],
   "plastics": [
@@ -58,7 +56,7 @@
       "material": "gold",
       "color": "yellow",
       "threadLength": 5,
-      "inUse": false
+      "inUse": true
     },
     {
       "id": "4b3afe02-2e5b-450e-87d3-d73280c947b0",
@@ -79,7 +77,7 @@
       "material": "ezen",
       "color": "green",
       "threadLength": 78,
-      "inUse": false
+      "inUse": true
     }
   ]
 }

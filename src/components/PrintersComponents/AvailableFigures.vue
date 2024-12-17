@@ -15,8 +15,8 @@ onMounted(async () => {
 });
 
 // Добавление фигуры в очередь
-const handleAdd = async (printerId: string, figureId: string) => {
-  await printerStore.updatePrintQueue(printerId, figureId);
+const handleAdd = async (printerId: string, figureId: string, perimetr: number) => {
+  await printerStore.updatePrintQueue(printerId, figureId, perimetr);
   if (!printerStore.error) {
     await figureStore.updatePrintStatus(figureId, true);
   } else {
@@ -44,7 +44,7 @@ const tableData = computed(() => {
     <el-table-column prop="date" label="Date" width="150" />
     <el-table-column fixed="right" label="Operations" min-width="120">
       <template #default="{ row }">
-        <el-button type="primary" size="small" @click="handleAdd(id, row.id)">
+        <el-button type="primary" size="small" @click="handleAdd(id, row.id, row.perimetr)">
           Add +
         </el-button>
       </template>

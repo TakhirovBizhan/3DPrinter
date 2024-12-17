@@ -3,6 +3,7 @@
 import { usePrinterStore } from '@/store/PrinterStore';
 import { Delete, Edit } from '@element-plus/icons-vue';
 import PrintConfig from './PrintConfig.vue';
+import PlasticSelect from './PlasticSelect.vue'
 
 const printerStore = usePrinterStore();
 
@@ -15,7 +16,6 @@ defineProps({
   id: { type: String, required: true },
   articule: String,
   mark: String,
-  plasticCoil: { type: String, default: 'No coil' },
   isPrintStarted: Boolean,
   printingSpeed: Number,
   modelQueue: []
@@ -35,7 +35,7 @@ defineProps({
     <img src=https://cdn2.iconfinder.com/data/icons/robotics-butterscotch-vol-1/512/3D_Print-512.png
       style="width: 100%" />
     <p class="article">article: {{ mark }}</p>
-    <p class="text">plastic coil: {{ plasticCoil }}</p>
+    <PlasticSelect :id />
     <p class="text">printing speed: {{ printingSpeed }}</p>
     <template #footer>
       <div class="footer__card">

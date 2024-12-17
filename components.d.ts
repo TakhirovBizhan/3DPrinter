@@ -43,6 +43,7 @@ declare module 'vue' {
     ModelCard: typeof import('./src/components/FigureComponents/ModelCard.vue')['default']
     ModelForm: typeof import('./src/components/FigureComponents/FigureForm.vue')['default']
     ModelList: typeof import('./src/components/FigureComponents/FigureList.vue')['default']
+    PlasticSelect: typeof import('./src/components/PrintersComponents/PlasticSelect.vue')['default']
     PrintConfig: typeof import('./src/components/PrintersComponents/PrintConfig.vue')['default']
     PrinterCard: typeof import('./src/components/PrintersComponents/PrinterCard.vue')['default']
     PrinterCarousel: typeof import('./src/components/PrintersComponents/PrinterCarousel.vue')['default']

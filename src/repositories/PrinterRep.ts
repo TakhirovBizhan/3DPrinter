@@ -24,7 +24,7 @@ class PrinterRep {
     return { error: error.value, loading: loading.value };
   }
 
-  async  UpdateQueue(printerId: string, printer: Printer) {
+  async  update(printerId: string, printer: Printer) {
     const url = `printers/${printerId}`;
     const { error, loading, fetchData } = useFetch<Printer>(url, 'put', printer);
     await fetchData();

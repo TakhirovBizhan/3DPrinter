@@ -9,14 +9,14 @@ export class PlasticRep {
 
     const { data, error, loading, fetchData } = useFetch<PlasticCoil>('plastics', 'post', newPlastic);
 
-    await fetchData();  
-    return { data: data.value, error: error.value, loading: loading.value }; 
+    await fetchData();
+    return { data: data.value, error: error.value, loading: loading.value };
   }
 
   async get() {
     const { data, error, loading, fetchData } = useFetch<PlasticCoil[]>('plastics', 'get');
-    await fetchData();  
-    return { data: data.value, error: error.value, loading: loading.value }; 
+    await fetchData();
+    return { data: data.value, error: error.value, loading: loading.value };
   }
 
   async delete(id: string) {
@@ -24,6 +24,14 @@ export class PlasticRep {
     await fetchData();
     return { error: error.value, loading: loading.value };
   }
+
+    async  update(plasticId: string, plastic: PlasticCoil) {
+      const url = `plastics/${plasticId}`;
+      const { error, loading, fetchData } = useFetch<PlasticCoil>(url, 'put', plastic);
+      await fetchData();
+
+      return { error: error.value, loading: loading.value };
+    }
 }
 
 export const plasticRep = new PlasticRep();

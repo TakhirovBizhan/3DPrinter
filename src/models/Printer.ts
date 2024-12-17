@@ -1,16 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
-import type { PlasticCoil } from './PlasticCoil';
 
 export class Printer {
     readonly id: string;
     isPrintStarted = false;
     mark: string;
     articule: string;
-    plasticCoil: PlasticCoil | null;
+    plasticId: string | null;
     printingSpeed: number;
     printQueue: string[];
     completedModels: string[];
-    currentCoilId: string | null;
 
     constructor(
         mark: string,
@@ -20,11 +18,10 @@ export class Printer {
         this.id = uuidv4();
         this.mark = mark;
         this.articule = articule;
-        this.plasticCoil = null;
+        this.plasticId = null;
         this.printingSpeed = printingSpeed;
         this.printQueue = [];
         this.completedModels = [];
-        this.currentCoilId = null;
     }
 
     // putCoil(plasticCoil: PlasticCoil): string {
