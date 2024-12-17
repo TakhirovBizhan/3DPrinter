@@ -16,8 +16,14 @@ const selectedPlastic = computed({
     return printer?.plasticId || null;
   },
   set: async (newPlasticId: string) => {
+    const oldPlasticId = selectedPlastic.value;
+    if (oldPlasticId && oldPlasticId !== newPlasticId) {
+      await plasticStore.setPlasticInUse(oldPlasticId, false);
+    }
+
     await printerStore.updatePrinterPlastic(props.id, newPlasticId);
-    await plasticStore.setPlasticInUse(newPlasticId, true)
+
+    await plasticStore.setPlasticInUse(newPlasticId, true);
   },
 });
 

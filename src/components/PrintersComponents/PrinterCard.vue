@@ -4,15 +4,13 @@ import { usePrinterStore } from '@/store/PrinterStore';
 import { Delete, Edit } from '@element-plus/icons-vue';
 import PrintConfig from './PrintConfig.vue';
 import PlasticSelect from './PlasticSelect.vue'
+import { usePlasticStore } from '@/store/PlasticStore';
 
 const printerStore = usePrinterStore();
-
-const deletePrinter = async (id: string) => {
-  printerStore.deletePrinter(id);
-}
+const plasticStore = usePlasticStore();
 
 
-defineProps({
+const props = defineProps({
   id: { type: String, required: true },
   articule: String,
   mark: String,
@@ -20,6 +18,15 @@ defineProps({
   printingSpeed: Number,
   modelQueue: []
 });
+const printer = printerStore.printers.find((p) => p.id === props.id);
+
+const deletePrinter = async (id: string) => {
+  printerStore.deletePrinter(id);
+  if (printer?.plasticId) {
+    await plasticStore.setPlasticInUse(printer?.plasticId, false)
+  }
+}
+
 
 </script>
 

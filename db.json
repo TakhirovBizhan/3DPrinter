@@ -34,18 +34,18 @@
       "isPrintStarted": false,
       "mark": "12345",
       "articule": "L-12",
-      "plasticId": "1a7a4f64-9ab1-410e-be73-ae6880ce64d1",
+      "plasticId": "4b3afe02-2e5b-450e-87d3-d73280c947b0",
       "printingSpeed": 40,
       "printQueue": [],
       "completedModels": []
     },
     {
-      "id": "0157d545-d01c-41d4-abc3-c4acf65c25be",
+      "id": "f7c40708-d52d-478f-8ada-a9a7dd0d59be",
       "isPrintStarted": false,
-      "mark": "t2123",
+      "mark": "123421",
       "articule": "T-2",
-      "plasticId": "581a6471-c6f0-4cd8-a8bc-97b994ac4498",
-      "printingSpeed": 5,
+      "plasticId": "1a7a4f64-9ab1-410e-be73-ae6880ce64d1",
+      "printingSpeed": 14,
       "printQueue": [],
       "completedModels": []
     }
@@ -63,7 +63,7 @@
       "material": "silver",
       "color": "blue",
       "threadLength": 37,
-      "inUse": false
+      "inUse": true
     },
     {
       "id": "1b7a24dc-016f-434a-866e-10e99d524056",
@@ -77,7 +77,7 @@
       "material": "ezen",
       "color": "green",
       "threadLength": 78,
-      "inUse": true
+      "inUse": false
     }
   ]
 }
