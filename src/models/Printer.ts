@@ -9,7 +9,7 @@ export class Printer {
     printingSpeed: number;
     printQueue: string[];
     completedModels: string[];
-    currentFigure?: string;
+    currentFigure: string | null;
     progress: number = 0;
 
     constructor(
@@ -24,6 +24,7 @@ export class Printer {
         this.printingSpeed = printingSpeed;
         this.printQueue = [];
         this.completedModels = [];
+        this.currentFigure = null;
     }
 
     setPrintStarted () {

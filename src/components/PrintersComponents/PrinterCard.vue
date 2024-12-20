@@ -5,6 +5,7 @@ import { Delete } from '@element-plus/icons-vue';
 import PrintConfig from './PrintConfig.vue';
 import PlasticSelect from './PlasticSelect.vue'
 import { usePlasticStore } from '@/store/PlasticStore';
+import PrinterControl from './PrinterControl.vue';
 
 const printerStore = usePrinterStore();
 const plasticStore = usePlasticStore();
@@ -46,7 +47,8 @@ const deletePrinter = async (id: string) => {
     <p class="text">printing speed: {{ printingSpeed }}</p>
     <template #footer>
       <div class="footer__card">
-        <PrintConfig :id="id" :articule="articule" />
+        <PrintConfig :id="id" />
+        <PrinterControl :id="id" />
         <div v-if="!isPrintStarted">
           <el-button :loading="printerStore.loading" :disabled="isPrintStarted" @click="() => deletePrinter(id)"
             type="danger" :icon="Delete" circle />

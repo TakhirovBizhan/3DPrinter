@@ -50,8 +50,7 @@ defineProps({
         </template>
       </el-popover>
       <el-button v-if="status === 'ready'" plain type="danger" @click="() => updateFigureStatus(id, 'created')"
-        round>Remove
-        from list</el-button>
+        round>Remove</el-button>
       <el-button type="primary" @click="() => addFigure(modelName, perimetr)" round>Copy</el-button>
     </template>
   </el-card>

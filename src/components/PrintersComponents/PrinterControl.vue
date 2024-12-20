@@ -15,6 +15,8 @@ onMounted(() => {
   figureStore.fetchFigures();
 });
 
+
+
 function handleStartPrinting(printerId: string) {
   printerStore.startPrinting(printerId);
 }
@@ -40,7 +42,7 @@ const currentFigure = computed(() => {
       :stroke-width="26" />
 
     <div v-if="printer?.isPrintStarted">
-      <p>Printing: {{ currentFigure || '...' }}</p>
+      <p>Printing: {{ currentFigure }}</p>
       <el-button type="danger" @click="handleStopPrinting(printer.id)" :disabled="printerStore.loading">
         Stop
       </el-button>
@@ -51,7 +53,6 @@ const currentFigure = computed(() => {
       </el-button>
     </div>
     <div v-else>
-      <div>Error!</div>
     </div>
   </div>
 </template>

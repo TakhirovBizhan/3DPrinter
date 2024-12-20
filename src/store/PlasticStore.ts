@@ -15,6 +15,8 @@ export const usePlasticStore = defineStore('plasticStore', () => {
     plastics.value.filter((plastic) => !plastic.inUse)
   );
 
+  const plasticLength = (id: string) => computed(() => plastics.value.find((p) => p.id === id)?.threadLength)
+
   async function fetchPlastics() {
     loading.value = true;
     error.value = null;
@@ -34,7 +36,8 @@ export const usePlasticStore = defineStore('plasticStore', () => {
     error.value = null;
     const plasticIndex = plastics.value.findIndex((p) => p.id === plasticId);
     const plastic = plastics.value[plasticIndex];
-    plastic.cutThread(length);
+    const newLength = plastic.threadLength - length;
+    plastic.threadLength = newLength;
 
     await plasticRep.update(plasticId, plastic);
 
@@ -105,6 +108,7 @@ export const usePlasticStore = defineStore('plasticStore', () => {
     error,
     totalPlastics,
     availablePlastics,
+    plasticLength,
 
     cutThread,
     fetchPlastics,

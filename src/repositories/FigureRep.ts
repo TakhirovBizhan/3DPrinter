@@ -18,6 +18,15 @@ class FigureRep {
     return { data: data.value, error: error.value, loading: loading.value };
   }
 
+  async getById(id: string) {
+    const {data, error, fetchData } = useFetch<Figure>(`figures/${id}`, 'get')
+
+    await fetchData();
+
+    return { data: data.value, error: error.value };
+
+  }
+
   async delete(id: string) {
     const { error, loading, fetchData } = useFetch<null>(`figures/${id}`, 'delete');
     await fetchData();
