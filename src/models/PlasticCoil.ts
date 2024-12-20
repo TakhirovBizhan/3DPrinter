@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { PrintingError } from './dataProps';
 
 
 export class PlasticCoil {
@@ -15,11 +16,10 @@ export class PlasticCoil {
         this.threadLength = threadLength;
     }
 
-    cutThread(cutLength: number): void {
-        if (this.threadLength < cutLength) {
-            throw new Error('Not enough filament');
-        } else {
-            this.threadLength -= cutLength;
-        }
+    cutThread (length: number) {
+      if(length > this.threadLength) {
+        throw new PrintingError(this.material, 'не хватает длины!', this.threadLength)
+      }
+      this.threadLength -= length;
     }
 }

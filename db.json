@@ -4,27 +4,27 @@
       "id": "a5310263-e8d4-4b67-9dfe-2cd9cf610052",
       "creatingDate": "Dec 16, 21:11",
       "status": "created",
-      "inPrintQueue": false,
+      "inPrintQueue": true,
       "modelName": "cube",
       "perimetr": 3,
       "color": "black"
     },
     {
-      "id": "1dcb2459-e88b-4274-82d3-38dac02439ae",
-      "creatingDate": "Dec 17, 00:36",
+      "id": "e84f198c-be80-4de6-9502-41bcfe2f3a41",
+      "creatingDate": "Dec 17, 03:34",
       "status": "created",
       "inPrintQueue": false,
-      "modelName": "bike",
-      "perimetr": 12.3,
+      "modelName": "pizza",
+      "perimetr": 6,
       "color": "black"
     },
     {
-      "id": "0cb8d1a7-e901-47d4-a36d-45d6e9b3ad99",
-      "creatingDate": "Dec 17, 00:36",
+      "id": "d1c0da04-d44e-4bcb-b625-75ce98c9084b",
+      "creatingDate": "Dec 17, 12:03",
       "status": "created",
       "inPrintQueue": false,
-      "modelName": "bike",
-      "perimetr": 12.3,
+      "modelName": "Tank",
+      "perimetr": 80,
       "color": "black"
     }
   ],
@@ -34,7 +34,7 @@
       "isPrintStarted": false,
       "mark": "12345",
       "articule": "L-12",
-      "plasticId": "4b3afe02-2e5b-450e-87d3-d73280c947b0",
+      "plasticId": "7e351d20-dea9-463c-b21a-a867562be42f",
       "printingSpeed": 40,
       "printQueue": [],
       "completedModels": []
@@ -44,7 +44,7 @@
       "isPrintStarted": false,
       "mark": "123421",
       "articule": "T-2",
-      "plasticId": "1a7a4f64-9ab1-410e-be73-ae6880ce64d1",
+      "plasticId": "379ceb4e-8558-40e9-a1c8-23be588fcd6e",
       "printingSpeed": 14,
       "printQueue": [],
       "completedModels": []
@@ -52,31 +52,24 @@
   ],
   "plastics": [
     {
-      "id": "1a7a4f64-9ab1-410e-be73-ae6880ce64d1",
-      "material": "gold",
-      "color": "yellow",
-      "threadLength": 5,
-      "inUse": true
-    },
-    {
-      "id": "4b3afe02-2e5b-450e-87d3-d73280c947b0",
-      "material": "silver",
-      "color": "blue",
-      "threadLength": 37,
-      "inUse": true
-    },
-    {
       "id": "1b7a24dc-016f-434a-866e-10e99d524056",
       "material": "polymorph",
       "color": "black",
       "threadLength": 100,
-      "inUse": false
+      "inUse": true
     },
     {
-      "id": "581a6471-c6f0-4cd8-a8bc-97b994ac4498",
-      "material": "ezen",
+      "id": "379ceb4e-8558-40e9-a1c8-23be588fcd6e",
+      "material": "Ezen",
       "color": "green",
-      "threadLength": 78,
+      "threadLength": 100,
+      "inUse": true
+    },
+    {
+      "id": "7e351d20-dea9-463c-b21a-a867562be42f",
+      "material": "stone",
+      "color": "red",
+      "threadLength": 50,
       "inUse": false
     }
   ]

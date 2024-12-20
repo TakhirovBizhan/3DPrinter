@@ -47,6 +47,7 @@ declare module 'vue' {
     PrintConfig: typeof import('./src/components/PrintersComponents/PrintConfig.vue')['default']
     PrinterCard: typeof import('./src/components/PrintersComponents/PrinterCard.vue')['default']
     PrinterCarousel: typeof import('./src/components/PrintersComponents/PrinterCarousel.vue')['default']
+    PrinterControl: typeof import('./src/components/PrintersComponents/PrinterControl.vue')['default']
     PrinterForm: typeof import('./src/components/PrintersComponents/PrinterForm.vue')['default']
     PrinterList: typeof import('./src/components/PrintersComponents/PrinterList.vue')['default']
     PrintQueue: typeof import('./src/components/PrintersComponents/PrintQueue.vue')['default']

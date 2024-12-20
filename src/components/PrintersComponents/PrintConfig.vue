@@ -13,8 +13,8 @@ defineProps({
 </script>
 
 <template>
-  <el-button type="primary" @click="dialogConfigVisible = true">
-    Print
+  <el-button type="info" @click="dialogConfigVisible = true">
+    queue
   </el-button>
   <el-dialog v-model="dialogConfigVisible" :title="articule" width="600px">
     <div class="dialog">

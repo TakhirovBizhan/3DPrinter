@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { printerRep } from '@/repositories/PrinterRep';
-import type { PrinterProps } from '@/models/dataProps';
+import { PrintingError, type PrinterProps } from '@/models/dataProps';
 import type { Printer } from '@/models/Printer';
 import { usePlasticStore } from '@/store/PlasticStore';
+import { figureRep } from '@/repositories/FigureRep';
+import { ElNotification } from 'element-plus';
 
 export const usePrinterStore = defineStore('printerStore', () => {
   const printers = ref<Printer[]>([]);
@@ -11,7 +13,11 @@ export const usePrinterStore = defineStore('printerStore', () => {
   const error = ref<string | null>(null);
   const plasticStore = usePlasticStore();
 
+
   const totalPrinters = computed(() => printers.value.length);
+
+  const printer = (id: string) => computed(() => printers.value.find((p) => p.id === id))
+
 
   async function fetchPrinters() {
     loading.value = true;
@@ -61,6 +67,36 @@ export const usePrinterStore = defineStore('printerStore', () => {
       } else {
         printers.value.splice(printerIndex, 1, updatedPrinter);
       }
+    }
+
+    loading.value = false;
+  }
+
+  async function updatePrinterPlastic(printerId: string, plasticId: string) {
+    loading.value = true;
+    error.value = null;
+
+    const printerIndex = printers.value.findIndex((p) => p.id === printerId);
+
+    if (printerIndex === -1) {
+      error.value = 'Printer not found';
+      loading.value = false;
+      return;
+    }
+
+    const printer = printers.value[printerIndex];
+
+    const updatedPrinter = {
+      ...printer,
+      plasticId,
+    };
+
+    const { error: updateError } = await printerRep.update(printerId, updatedPrinter);
+
+    if (updateError) {
+      error.value = updateError;
+    } else {
+      printers.value.splice(printerIndex, 1, updatedPrinter);
     }
 
     loading.value = false;
@@ -126,48 +162,103 @@ export const usePrinterStore = defineStore('printerStore', () => {
     loading.value = false;
   }
 
-  async function updatePrinterPlastic(printerId: string, plasticId: string) {
+  async function startPrinting(printerId: string) {
     loading.value = true;
     error.value = null;
 
-    const printerIndex = printers.value.findIndex((p) => p.id === printerId);
-
-    if (printerIndex === -1) {
-      error.value = 'Printer not found';
+    try {
+      const printer = printers.value.find((p) => p.id === printerId);
+      if (!printer || !printer.printQueue.length) {
+        throw new PrintingError('StopPrinting', 'Принтер не найден');
+      }
+      printer!.setPrintStarted();
+      const figureId = printer!.printQueue[0];
+      await printerRep.update(printerId, printer!);
+      await figureRep.updateStatus(figureId, 'in proccess');
+      await fetchPrinters();
       loading.value = false;
-      return;
+
+      setInterval(() => {
+        try {
+          plasticStore.cutThread(figureId, printer.printingSpeed);
+        } catch (err) {
+          ElNotification({
+            message: `Error! ${err}`,
+            type: 'error',
+            customClass: 'message-error',
+            duration: 2000,
+            position: 'bottom-right',
+            showClose: false,
+          });
+        }
+      }, 1000);
+
+    } catch (err) {
+      if (err instanceof PrintingError) {
+        ElNotification({
+          message: `Error! ${err.message}`,
+          type: 'error',
+          customClass: 'message-error',
+          duration: 2000,
+          position: 'bottom-right',
+          showClose: false,
+        });
+      } else {
+        ElNotification({
+          message: `Unknown error!`,
+          type: 'error',
+          customClass: 'message-error',
+          duration: 2000,
+          position: 'bottom-right',
+          showClose: false,
+        });
+      }
+    } finally {
+      loading.value = false;
     }
-
-    const printer = printers.value[printerIndex];
-
-    const updatedPrinter = {
-      ...printer,
-      plasticId,
-    };
-
-    const { error: updateError } = await printerRep.update(printerId, updatedPrinter);
-
-    if (updateError) {
-      error.value = updateError;
-    } else {
-      printers.value.splice(printerIndex, 1, updatedPrinter);
-    }
-
-    loading.value = false;
   }
 
-  return {
-    printers,
-    loading,
-    error,
-    totalPrinters,
+  async function stopPrinting(printerId: string) {
+    loading.value = true;
+    error.value = null;
 
-    removeFromPrintQueue,
-    updatePrintQueue,
-    fetchPrinters,
-    addPrinter,
-    deletePrinter,
-    updatePrinterPlastic,
-  };
-});
+    try {
+      const printer = printers.value.find((p) => p.id === printerId);
+      if (!printer) {
+        throw new PrintingError('StopPrinting', 'Принтер не найден');
+      }
+
+      printer.setPrintStopped();
+      const figureId = printer.printQueue[0];
+      await printerRep.update(printerId, printer);
+      await figureRep.updateStatus(figureId, 'created');
+      await fetchPrinters();
+
+
+    } catch (err) {
+      if (err instanceof PrintingError) {
+        error.value = err.message;
+      }
+    } finally {
+      loading.value = false;
+    }
+  }
+
+    return {
+      printers,
+      loading,
+      error,
+      totalPrinters,
+
+      printer,
+      updatePrinterPlastic,
+      stopPrinting,
+      startPrinting,
+      removeFromPrintQueue,
+      updatePrintQueue,
+      fetchPrinters,
+      addPrinter,
+      deletePrinter,
+    };
+  });
 

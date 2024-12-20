@@ -4,17 +4,16 @@ import { usePrinterStore } from '@/store/PrinterStore';
 import { onMounted, computed } from 'vue';
 
 defineProps({
-  id: { type: String, required: true }, // ID принтера
+  id: { type: String, required: true },
 });
 
 const figureStore = useFigureStore();
 const printerStore = usePrinterStore();
 
 onMounted(async () => {
-  await figureStore.fetchFigures(); // Загрузка фигур
+  await figureStore.fetchFigures();
 });
 
-// Добавление фигуры в очередь
 const handleAdd = async (printerId: string, figureId: string, perimetr: number) => {
   await printerStore.updatePrintQueue(printerId, figureId, perimetr);
   if (!printerStore.error) {

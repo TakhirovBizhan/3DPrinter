@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { plasticRep } from '@/repositories/PlasticRep';
-import type { PlasticCoil } from '@/models/PlasticCoil';
+import {  plasticRep } from '@/repositories/PlasticRep';
+import { PlasticCoil } from '@/models/PlasticCoil';
 import type { PlasticProps } from '@/models/dataProps';
 
 export const usePlasticStore = defineStore('plasticStore', () => {
@@ -27,6 +27,17 @@ export const usePlasticStore = defineStore('plasticStore', () => {
     }
 
     loading.value = false;
+  }
+
+  async function cutThread(plasticId: string, length: number) {
+    loading.value = true;
+    error.value = null;
+    const plasticIndex = plastics.value.findIndex((p) => p.id === plasticId);
+    const plastic = plastics.value[plasticIndex];
+    plastic.cutThread(length);
+
+    await plasticRep.update(plasticId, plastic);
+
   }
 
   async function addPlastic(plastic: PlasticProps) {
@@ -87,6 +98,7 @@ export const usePlasticStore = defineStore('plasticStore', () => {
     loading.value = false;
   }
 
+
   return {
     plastics,
     loading,
@@ -94,6 +106,7 @@ export const usePlasticStore = defineStore('plasticStore', () => {
     totalPlastics,
     availablePlastics,
 
+    cutThread,
     fetchPlastics,
     addPlastic,
     deletePlastic,

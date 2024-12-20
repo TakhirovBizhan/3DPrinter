@@ -10,12 +10,4 @@ export class Figure {
         public perimetr: number,
         public color: 'red' | 'blue' | 'green' | 'yellow' | 'black' = 'black'
     ) { }
-
-    setStatusInProccess() {
-        this.status = 'in proccess'
-    }
-
-    setStatusReady() {
-        this.status = 'ready'
-    }
 }

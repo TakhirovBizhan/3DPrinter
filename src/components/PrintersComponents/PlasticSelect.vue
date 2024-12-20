@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { usePrinterStore } from '@/store/PrinterStore';
 import { usePlasticStore } from '@/store/PlasticStore';
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, ref } from 'vue';
+import { ElNotification } from 'element-plus';
 
 const props = defineProps({
   id: { type: String, required: true },
@@ -10,45 +11,48 @@ const props = defineProps({
 const printerStore = usePrinterStore();
 const plasticStore = usePlasticStore();
 
-const selectedPlastic = computed({
-  get: () => {
-    const printer = printerStore.printers.find((p) => p.id === props.id);
-    return printer?.plasticId || null;
-  },
-  set: async (newPlasticId: string) => {
+onMounted(async () => {
+  await printerStore.fetchPrinters();
+  await plasticStore.fetchPlastics();
+});
+
+const printer = computed(() =>
+  printerStore.printers.find((p) => p.id === props.id)
+);
+
+const selectedPlastic = ref(printer.value?.plasticId || null);
+
+const updateSelectedPlastic = async (newPlasticId: string) => {
+  if (printer.value?.printQueue.length === 0) {
     const oldPlasticId = selectedPlastic.value;
     if (oldPlasticId && oldPlasticId !== newPlasticId) {
       await plasticStore.setPlasticInUse(oldPlasticId, false);
     }
-
     await printerStore.updatePrinterPlastic(props.id, newPlasticId);
-
     await plasticStore.setPlasticInUse(newPlasticId, true);
-  },
-});
+    selectedPlastic.value = newPlasticId;
+  } else {
+    ElNotification({
+      message: `Print queue is not empty!`,
+      type: 'error',
+      customClass: 'message-error',
+      duration: 2000,
+      position: 'bottom-right',
+      showClose: false,
+    });
+  }
+};
 
 const availablePlastics = computed(() =>
   plasticStore.plastics.filter(
     (plastic) => !plastic.inUse || plastic.id === selectedPlastic.value
   )
 );
-
-onMounted(async () => {
-  await printerStore.fetchPrinters();
-  await plasticStore.fetchPlastics();
-});
 </script>
-
 <template>
-  <el-select class="select" v-model="selectedPlastic" placeholder="Select Plastic" style="width: 175px"
-    :disabled="printerStore.printers.find((p) => p.id === props.id)?.isPrintStarted">
+  <el-select class="select" :model-value="selectedPlastic" @change="updateSelectedPlastic" placeholder="Select Plastic"
+    style="width: 175px" :disabled="printer?.isPrintStarted">
     <el-option v-for="plastic in availablePlastics" :key="plastic.id"
       :label="`${plastic.material} (${plastic.color}) - ${plastic.threadLength}mm`" :value="plastic.id" />
   </el-select>
 </template>
-
-<style scoped>
-.select {
-  margin-bottom: 10px;
-}
-</style>

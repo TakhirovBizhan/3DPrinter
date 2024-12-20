@@ -9,6 +9,8 @@ export class Printer {
     printingSpeed: number;
     printQueue: string[];
     completedModels: string[];
+    currentFigure?: string;
+    progress: number = 0;
 
     constructor(
         mark: string,
@@ -22,6 +24,19 @@ export class Printer {
         this.printingSpeed = printingSpeed;
         this.printQueue = [];
         this.completedModels = [];
+    }
+
+    setPrintStarted () {
+      this.isPrintStarted = true;
+    }
+
+    setPrintStopped () {
+      this.isPrintStarted = false
+    }
+
+    updateProgress(step: number) {
+      this.progress += step;
+      if (this.progress > 100) this.progress = 100;
     }
 
     // putCoil(plasticCoil: PlasticCoil): string {

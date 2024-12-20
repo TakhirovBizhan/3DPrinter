@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import { usePrinterStore } from '@/store/PrinterStore';
-import { Delete, Edit } from '@element-plus/icons-vue';
+import { Delete } from '@element-plus/icons-vue';
 import PrintConfig from './PrintConfig.vue';
 import PlasticSelect from './PlasticSelect.vue'
 import { usePlasticStore } from '@/store/PlasticStore';
@@ -50,19 +50,12 @@ const deletePrinter = async (id: string) => {
         <div v-if="!isPrintStarted">
           <el-button :loading="printerStore.loading" :disabled="isPrintStarted" @click="() => deletePrinter(id)"
             type="danger" :icon="Delete" circle />
-          <el-button type="primary" :icon="Edit" circle />
         </div>
         <div v-else>
           <el-popover placement="top-start" title="Warning!" :width="200" trigger="hover"
             content="If you want to delete this printer you have to wait or cancel printing">
             <template #reference>
               <el-button disabled type="danger" :icon="Delete" circle />
-            </template>
-          </el-popover>
-          <el-popover placement="top-start" title="Warning!" :width="200" trigger="hover"
-            content="If you want to edit this printer you have to wait or cancel printing">
-            <template #reference>
-              <el-button type="primary" disabled :icon="Edit" circle />
             </template>
           </el-popover>
         </div>
