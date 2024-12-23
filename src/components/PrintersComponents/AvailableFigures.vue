@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useFigureStore } from '@/store/FigureStore';
 import { usePrinterStore } from '@/store/PrinterStore';
+import { ElNotification } from 'element-plus';
 import { onMounted, computed } from 'vue';
 
 defineProps({
@@ -19,7 +20,14 @@ const handleAdd = async (printerId: string, figureId: string, perimetr: number) 
   if (!printerStore.error) {
     await figureStore.updatePrintStatus(figureId, true);
   } else {
-    console.error('Failed to add figure to queue');
+    ElNotification({
+      message: `'Failed to add figure to queue'`,
+      type: 'error',
+      customClass: 'message-error',
+      duration: 2000,
+      position: 'bottom-right',
+      showClose: false,
+    });
   }
 };
 

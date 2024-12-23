@@ -1,93 +1,89 @@
 {
   "figures": [
     {
-      "id": "263b619c-63d0-4f96-9e50-230e164fbca8",
-      "creatingDate": "Dec 21, 00:45",
+      "id": "050a85d9-10e3-49ad-b740-1f197e9cceeb",
+      "creatingDate": "Dec 24, 01:14",
       "status": "created",
-      "inPrintQueue": false,
-      "modelName": "Tank",
-      "perimetr": 80,
+      "inPrintQueue": true,
+      "modelName": "dsadsadas",
+      "perimetr": 40,
       "color": "black"
     },
     {
-      "id": "a0a70927-6794-4bae-8ca5-ced3015ef898",
-      "creatingDate": "Dec 21, 00:45",
-      "status": "ready",
+      "id": "79387554-83f6-4faa-8056-d83a43912ad3",
+      "creatingDate": "Dec 24, 01:14",
+      "status": "created",
       "inPrintQueue": true,
-      "modelName": "cube",
-      "perimetr": 3,
+      "modelName": "212dsa",
+      "perimetr": 20,
       "color": "black"
     },
     {
-      "id": "334ffe00-1e11-48e9-a7bf-9e4448b8aed1",
-      "creatingDate": "Dec 21, 00:46",
+      "id": "b292632c-0725-4d7f-abd5-2d744a6f63d9",
+      "creatingDate": "Dec 24, 01:15",
       "status": "created",
       "inPrintQueue": true,
-      "modelName": "Test-3",
+      "modelName": "1121",
       "perimetr": 1,
       "color": "black"
     },
     {
-      "id": "7da9f8db-3815-4aef-be7f-cf3db9d3f07b",
-      "creatingDate": "Dec 21, 00:48",
+      "id": "72001498-be4c-4a08-a4c6-1bc5b3ce8d43",
+      "creatingDate": "Dec 24, 01:15",
       "status": "created",
-      "inPrintQueue": false,
-      "modelName": "cube",
-      "perimetr": 3,
+      "inPrintQueue": true,
+      "modelName": "sgfsfdv",
+      "perimetr": 1,
       "color": "black"
     }
   ],
   "printers": [
     {
-      "id": "4ff52ed3-9add-48dd-9e66-1fdd2685f7dd",
+      "id": "5e34f242-2a64-40b2-ab5c-cf1920ab85bd",
       "isPrintStarted": false,
-      "mark": "1342",
-      "articule": "Test-1",
-      "plasticId": "7e351d20-dea9-463c-b21a-a867562be42f",
-      "printingSpeed": 3,
+      "mark": "sdad",
+      "articule": "dsada",
+      "plasticId": "3dab5f57-98b1-4ec0-bbea-185088e81f01",
+      "printingSpeed": 1,
       "printQueue": [
-        "334ffe00-1e11-48e9-a7bf-9e4448b8aed1"
+        "050a85d9-10e3-49ad-b740-1f197e9cceeb",
+        "79387554-83f6-4faa-8056-d83a43912ad3"
       ],
       "completedModels": [],
       "currentFigure": null,
-      "progress": 0
-    },
-    {
-      "id": "b560e602-7d16-4d0a-a8a9-1dfcbde605e9",
-      "isPrintStarted": false,
-      "mark": "1234",
-      "articule": "Test-2",
-      "plasticId": "379ceb4e-8558-40e9-a1c8-23be588fcd6e",
-      "printingSpeed": 2,
-      "printQueue": [],
-      "completedModels": [
-        "a0a70927-6794-4bae-8ca5-ced3015ef898"
-      ],
-      "currentFigure": null,
-      "progress": 0
+      "progress": 0,
+      "loading": false,
+      "error": null
     }
   ],
   "plastics": [
-    {
-      "id": "1b7a24dc-016f-434a-866e-10e99d524056",
-      "material": "polymorph",
-      "color": "black",
-      "threadLength": 100,
-      "inUse": false
-    },
     {
       "id": "379ceb4e-8558-40e9-a1c8-23be588fcd6e",
       "material": "Ezen",
       "color": "green",
       "threadLength": 28,
-      "inUse": true
+      "inUse": false
     },
     {
       "id": "7e351d20-dea9-463c-b21a-a867562be42f",
       "material": "stone",
       "color": "red",
       "threadLength": 45,
+      "inUse": false
+    },
+    {
+      "id": "3dab5f57-98b1-4ec0-bbea-185088e81f01",
+      "material": "poly",
+      "color": "blue",
+      "threadLength": 170,
       "inUse": true
+    },
+    {
+      "id": "0e80781b-059b-4a63-8ee5-dffd56bcd404",
+      "material": "waw",
+      "color": "yellow",
+      "threadLength": 102,
+      "inUse": false
     }
   ]
 }

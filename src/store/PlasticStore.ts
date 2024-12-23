@@ -77,17 +77,11 @@ export const usePlasticStore = defineStore('plasticStore', () => {
 
     const plasticIndex = plastics.value.findIndex((p) => p.id === plasticId);
 
-    if (plasticIndex === -1) {
-      error.value = 'Plastic not found';
-      loading.value = false;
-      return;
-    }
-
     const plastic = plastics.value[plasticIndex];
 
     const updatedPlastic = {
       ...plastic,
-      inUse,
+      inUse: inUse,
     };
 
     const { error: updateError } = await plasticRep.update(plasticId, updatedPlastic);

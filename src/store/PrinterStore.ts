@@ -166,58 +166,66 @@ export const usePrinterStore = defineStore('printerStore', () => {
   //printing proccess
 
   async function startPrinting(printerId: string) {
-    loading.value = true;
-    error.value = null;
+    const printer = printers.value.find((p) => p.id === printerId);
+    if (!printer) {
+      ElNotification({
+        message: 'Принтер не найден!',
+        type: 'error',
+        customClass: 'message-error',
+        duration: 3000,
+      });
+      return;
+    }
+
+    printer.loading = true;
+    printer.error = null;
 
     try {
-      const printer = printers.value.find((p) => p.id === printerId);
-      if (!printer || !printer.printQueue.length) {
-        throw new PrintingError('StartPrinting', 'Принтер не найден или очередь пуста');
+      if (!printer.printQueue.length) {
+        throw new PrintingError(printer.articule, 'Очередь печати пуста');
       }
 
-      // Установка статуса
       printer.isPrintStarted = true;
       const figureId = printer.printQueue[0];
       const { data: figure, error: figureError } = await figureRep.getById(figureId);
 
       if (!figure || figureError) {
-        throw new PrintingError('StartPrinting', 'Фигура не найдена');
+        throw new PrintingError(printer.articule, 'Фигура не найдена');
       }
 
       await printerRep.update(printerId, printer);
       await figureRep.updateStatus(figureId, 'in proccess');
-      await fetchPrinters();
 
-      // Проверка и инициализация пластика
       const plasticId = printer.plasticId;
       if (!plasticId) {
-        throw new PrintingError('StartPrinting', 'Пластик для принтера не выбран');
+        throw new PrintingError(printer.articule, 'Пластик для принтера не выбран');
       }
 
       let plasticRemaining = plasticStore.plasticLength(plasticId).value;
       if (plasticRemaining === undefined) {
-        throw new PrintingError('StartPrinting', 'Невозможно получить длину пластика');
+        throw new PrintingError(printer.articule, 'Невозможно получить длину пластика');
       }
 
       const totalPerimeter = figure.perimetr;
       const printSpeed = printer.printingSpeed;
       let progress = 0;
 
-      // Запуск печати
       const printInterval = setInterval(async () => {
-        // Случайная ошибка
-        if (Math.random() < 0.05) { // 5% вероятность ошибки
+        // Случайная ошибка (5%)
+        if (Math.random() < 0.05) {
           clearInterval(printInterval);
           printer.isPrintStarted = false;
 
-          const errorTypes = ['Обрыв нити пластика', 'Перегрев принтера', 'Отклеилась модель от основания'];
+          const errorTypes = ['Обрыв нити', 'Перегрев', 'Отклеилась модель'];
           const randomError = errorTypes[Math.floor(Math.random() * errorTypes.length)];
 
+          printer.error = `Ошибка печати: ${randomError}`;
           ElNotification({
-            message: `Ошибка печати: ${randomError}`,
+            message: printer.error,
             type: 'error',
             customClass: 'message-error',
             duration: 3000,
+            position: 'bottom-right'
           });
 
           await figureRep.updateStatus(figureId, 'created');
@@ -225,86 +233,106 @@ export const usePrinterStore = defineStore('printerStore', () => {
           return;
         }
 
-        // Обновление прогресса
+        // Обновляем прогресс и расход пластика
         plasticRemaining! -= printSpeed;
         progress += (printSpeed / totalPerimeter) * 100;
+        printer.progress = progress;
 
+        // Условия завершения печати
         if (progress >= 100 || plasticRemaining! <= 0) {
           clearInterval(printInterval);
           printer.isPrintStarted = false;
 
           if (progress >= 100) {
             ElNotification({
-              message: `Печать завершена для фигуры ${figure.modelName}`,
+              message: `Печать завершена: ${figure.modelName}`,
+              customClass: 'message-success',
               type: 'success',
+              position: 'bottom-right',
               duration: 2000,
             });
-
             await figureRep.updateStatus(figureId, 'ready');
             printer.completedModels.push(figureId);
           } else {
             ElNotification({
               message: 'Недостаточно пластика для завершения печати!',
               type: 'error',
+              customClass: 'message-error',
               duration: 3000,
+              position: 'bottom-right'
             });
-
             await figureRep.updateStatus(figureId, 'created');
           }
 
-          printer.printQueue.shift(); // Удалить из очереди
+          // Удаляем фигуру из очереди
+          printer.printQueue.shift();
           await printerRep.update(printerId, printer);
           return;
         }
 
-        // Обновление данных принтера
-        printer.progress = progress;
+        // Визуальное обновление (разрезаем пластик)
         plasticStore.cutThread(plasticId, printSpeed);
         await printerRep.update(printerId, printer);
       }, 1000);
     } catch (err) {
-      if (err instanceof PrintingError) {
-        ElNotification({
-          message: `Ошибка: ${err.message}`,
-          type: 'error',
-          duration: 3000,
-        });
-      } else {
-        ElNotification({
-          message: 'Неизвестная ошибка!',
-          type: 'error',
-          duration: 3000,
-        });
-      }
+      printer.error = err instanceof PrintingError ? err.message : 'Неизвестная ошибка';
+      ElNotification({
+        message: printer.error,
+        customClass: 'message-error',
+        type: 'error',
+        duration: 3000,
+        position: 'bottom-right'
+      });
     } finally {
-      loading.value = false;
+      printer.loading = false;
     }
   }
 
-
   async function stopPrinting(printerId: string) {
-    loading.value = true;
-    error.value = null;
+    const printer = printers.value.find((p) => p.id === printerId);
+    if (!printer) {
+      ElNotification({
+        message: 'Принтер не найден!',
+        type: 'error',
+        customClass: 'message-error',
+        duration: 3000,
+        position: 'bottom-right'
+      });
+      return;
+    }
+
+    printer.loading = true;
+    printer.error = null;
 
     try {
-      const printer = printers.value.find((p) => p.id === printerId);
-      if (!printer) {
-        throw new PrintingError('StopPrinting', 'Принтер не найден');
+      if (!printer.isPrintStarted) {
+        throw new PrintingError('StopPrinting', 'Принтер не в процессе печати');
       }
 
-      printer.setPrintStopped();
+      printer.isPrintStarted = false;
       const figureId = printer.printQueue[0];
       await printerRep.update(printerId, printer);
       await figureRep.updateStatus(figureId, 'created');
-      await fetchPrinters();
+      printer.printQueue.shift();
 
-
+      ElNotification({
+        message: 'Печать остановлена',
+        type: 'warning',
+        duration: 2000,
+        customClass: 'message-error',
+        position: 'bottom-right'
+      });
     } catch (err) {
-      if (err instanceof PrintingError) {
-        error.value = err.message;
-      }
+      printer.error = err instanceof PrintingError ? err.message : 'Неизвестная ошибка';
+      ElNotification({
+        message: printer.error,
+        type: 'error',
+        customClass: 'message-error',
+        duration: 3000,
+        position: 'bottom-right'
+      });
     } finally {
-      loading.value = false;
+      printer.loading = false;
     }
   }
 

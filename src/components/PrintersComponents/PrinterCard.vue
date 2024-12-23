@@ -6,6 +6,7 @@ import PrintConfig from './PrintConfig.vue';
 import PlasticSelect from './PlasticSelect.vue'
 import { usePlasticStore } from '@/store/PlasticStore';
 import PrinterControl from './PrinterControl.vue';
+import { computed } from 'vue';
 
 const printerStore = usePrinterStore();
 const plasticStore = usePlasticStore();
@@ -19,15 +20,23 @@ const props = defineProps({
   printingSpeed: Number,
   modelQueue: []
 });
-const printer = printerStore.printers.find((p) => p.id === props.id);
+const printer = computed(() =>
+  printerStore.printers.find((p) => p.id === props.id)
+);
 
 const deletePrinter = async (id: string) => {
-  printerStore.deletePrinter(id);
-  if (printer?.plasticId) {
-    await plasticStore.setPlasticInUse(printer?.plasticId, false)
+  if (printer.value?.plasticId) {
+    await plasticStore.setPlasticInUse(printer.value?.plasticId, false)
   }
+  printerStore.deletePrinter(id);
 }
 
+const isDeleteDisabled = computed(() => {
+  if (!printer.value) return false;
+  return printer.value.isPrintStarted ||
+    (printer.value.printQueue?.length ?? 0) !== 0 ||
+    printer.value.plasticId !== '';
+});
 
 </script>
 
@@ -36,7 +45,7 @@ const deletePrinter = async (id: string) => {
     <template #header>
       <div class="card__header">
         <h4>Printer: {{ articule }}</h4>
-        <el-button class="button__busy" v-if="isPrintStarted" type="danger" plain>Busy</el-button>
+        <el-button class="button__busy" v-if="printer?.isPrintStarted" type="danger" plain>Busy</el-button>
         <el-button class="button__not_busy" v-else type="success" plain>Not busy</el-button>
       </div>
     </template>
@@ -49,17 +58,18 @@ const deletePrinter = async (id: string) => {
       <div class="footer__card">
         <PrintConfig :id="id" />
         <PrinterControl :id="id" />
-        <div v-if="!isPrintStarted">
-          <el-button :loading="printerStore.loading" :disabled="isPrintStarted" @click="() => deletePrinter(id)"
-            type="danger" :icon="Delete" circle />
-        </div>
-        <div v-else>
+
+        <div v-if="isDeleteDisabled">
           <el-popover placement="top-start" title="Warning!" :width="200" trigger="hover"
-            content="If you want to delete this printer you have to wait or cancel printing">
+            content="If you want to delete this printer you have to: wait or cancel printing; clear queue; remove plastic coil">
             <template #reference>
               <el-button disabled type="danger" :icon="Delete" circle />
             </template>
           </el-popover>
+        </div>
+        <div v-else>
+          <el-button :loading="printerStore.loading" :disabled="isPrintStarted" @click="() => deletePrinter(id)"
+            type="danger" :icon="Delete" circle />
         </div>
       </div>
     </template>

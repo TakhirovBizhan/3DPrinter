@@ -11,6 +11,8 @@ export class Printer {
     completedModels: string[];
     currentFigure: string | null;
     progress: number = 0;
+    loading: boolean = false;
+    error: string | null = null;
 
     constructor(
         mark: string,
