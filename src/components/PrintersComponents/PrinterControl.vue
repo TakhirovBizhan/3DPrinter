@@ -52,7 +52,6 @@ if (printer.value && printerStateMap[printer.value.id]?.error) {
         Stop
       </el-button>
     </div>
-
     <div v-else>
       <el-button type="primary" @click="handleStartPrinting(printer.id)" :disabled="printer.loading">
         Start Printing

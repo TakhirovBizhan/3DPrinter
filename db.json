@@ -1,39 +1,30 @@
 {
   "figures": [
     {
-      "id": "050a85d9-10e3-49ad-b740-1f197e9cceeb",
-      "creatingDate": "Dec 24, 01:14",
+      "id": "204db255-c9f2-4854-8865-335d4d70282d",
+      "creatingDate": "Dec 24, 02:27",
       "status": "created",
-      "inPrintQueue": true,
-      "modelName": "dsadsadas",
-      "perimetr": 40,
+      "inPrintQueue": false,
+      "modelName": "new-2",
+      "perimetr": 4,
       "color": "black"
     },
     {
-      "id": "79387554-83f6-4faa-8056-d83a43912ad3",
-      "creatingDate": "Dec 24, 01:14",
+      "id": "b2802a05-e836-4b65-b7f6-6a807f64efe9",
+      "creatingDate": "Dec 24, 02:27",
       "status": "created",
-      "inPrintQueue": true,
-      "modelName": "212dsa",
-      "perimetr": 20,
+      "inPrintQueue": false,
+      "modelName": "new-3",
+      "perimetr": 8,
       "color": "black"
     },
     {
-      "id": "b292632c-0725-4d7f-abd5-2d744a6f63d9",
-      "creatingDate": "Dec 24, 01:15",
+      "id": "efb2c8ab-2894-45d4-be44-3a2269e03f6e",
+      "creatingDate": "Dec 24, 02:27",
       "status": "created",
-      "inPrintQueue": true,
-      "modelName": "1121",
-      "perimetr": 1,
-      "color": "black"
-    },
-    {
-      "id": "72001498-be4c-4a08-a4c6-1bc5b3ce8d43",
-      "creatingDate": "Dec 24, 01:15",
-      "status": "created",
-      "inPrintQueue": true,
-      "modelName": "sgfsfdv",
-      "perimetr": 1,
+      "inPrintQueue": false,
+      "modelName": "new-1",
+      "perimetr": 5,
       "color": "black"
     }
   ],
@@ -45,10 +36,7 @@
       "articule": "dsada",
       "plasticId": "3dab5f57-98b1-4ec0-bbea-185088e81f01",
       "printingSpeed": 1,
-      "printQueue": [
-        "050a85d9-10e3-49ad-b740-1f197e9cceeb",
-        "79387554-83f6-4faa-8056-d83a43912ad3"
-      ],
+      "printQueue": [],
       "completedModels": [],
       "currentFigure": null,
       "progress": 0,

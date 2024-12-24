@@ -49,7 +49,8 @@ const tableData = computed(() => {
     <el-table-column prop="date" label="Date" width="150" />
     <el-table-column fixed="right" label="Operations" min-width="120">
       <template #default="{ row }">
-        <el-button type="danger" size="small" @click="handleRemove(props.id, row.id)">
+        <el-button type="danger" size="small" :Loading="printerStore.loading" :disabled="printerStore.loading"
+          @click="handleRemove(props.id, row.id)">
           Remove
         </el-button>
       </template>

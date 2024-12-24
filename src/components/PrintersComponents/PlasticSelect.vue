@@ -26,15 +26,12 @@ const updateSelectedPlastic = async (newPlasticId: string) => {
   if (printer.value?.printQueue.length === 0) {
     const oldPlasticId = selectedPlastic.value;
 
-    // Снимаем пластик с использования
     if (oldPlasticId && oldPlasticId !== newPlasticId) {
       await plasticStore.setPlasticInUse(oldPlasticId, false);
     }
 
-    // Обновляем пластик принтера (null если выбран 'No plastic')
     await printerStore.updatePrinterPlastic(props.id, newPlasticId);
 
-    // Устанавливаем новый пластик в использование, если он выбран
     if (newPlasticId) {
       await plasticStore.setPlasticInUse(newPlasticId, true);
     }
@@ -52,7 +49,6 @@ const updateSelectedPlastic = async (newPlasticId: string) => {
   }
 };
 
-// Доступные пластики
 const availablePlastics = computed(() =>
   plasticStore.plastics.filter(
     (plastic) => !plastic.inUse || plastic.id === selectedPlastic.value

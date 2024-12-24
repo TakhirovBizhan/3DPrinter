@@ -51,7 +51,8 @@ const tableData = computed(() => {
     <el-table-column prop="date" label="Date" width="150" />
     <el-table-column fixed="right" label="Operations" min-width="120">
       <template #default="{ row }">
-        <el-button type="primary" size="small" @click="handleAdd(id, row.id, row.perimetr)">
+        <el-button type="primary" size="small" :Loading="figureStore.loading" :disabled="figureStore.loading"
+          @click="handleAdd(id, row.id, row.perimetr)">
           Add +
         </el-button>
       </template>
