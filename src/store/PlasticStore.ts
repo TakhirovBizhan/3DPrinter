@@ -16,6 +16,7 @@ export const usePlasticStore = defineStore('plasticStore', () => {
   );
 
   const plasticLength = (id: string) => computed(() => plastics.value.find((p) => p.id === id)?.threadLength)
+  const plasticColor = (id: string) => computed(() => plastics.value.find((p) => p.id === id)?.color);
 
   async function fetchPlastics() {
     loading.value = true;
@@ -103,6 +104,7 @@ export const usePlasticStore = defineStore('plasticStore', () => {
     totalPlastics,
     availablePlastics,
     plasticLength,
+    plasticColor,
 
     cutThread,
     fetchPlastics,

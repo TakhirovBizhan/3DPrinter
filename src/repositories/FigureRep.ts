@@ -46,16 +46,6 @@ class FigureRep {
     await fetchData();
     return { error: error.value, loading: loading.value };
   }
-
-
-  async fetchAllToPinia(figureStore: { setError: (error: string | null) => void; setFigures: (figures: Figure[]) => void }) {
-    const { data, error } = await this.get();
-    if (error) {
-      figureStore.setError(error);
-    } else if (data) {
-      figureStore.setFigures(data);
-    }
-  }
 }
 
 export const figureRep = new FigureRep();

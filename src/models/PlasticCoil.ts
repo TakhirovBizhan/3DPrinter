@@ -5,14 +5,13 @@ import { PrintingError } from './dataProps';
 export class PlasticCoil {
     readonly id: string;
     material: string;
-    color: string;
+    color: 'red' | 'blue' | 'green' | 'yellow' | 'black' = 'black';
     threadLength: number;
     inUse: boolean = false;
 
     constructor(material: string, color: string, threadLength: number) {
         this.id = uuidv4()
         this.material = material;
-        this.color = color;
         this.threadLength = threadLength;
     }
 

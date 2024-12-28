@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
-import { usePrinter } from '@/composable/usePrinter';
 import { useFigureStore } from '@/store/FigureStore';
-import { ElNotification } from 'element-plus';
+import { usePrinterStore } from '@/store/PrinterStore';
 
 const props = defineProps({
   id: { type: String, required: true },
 });
 
-const { printers, startPrinting, stopPrinting, printerStateMap } = usePrinter();
 const figureStore = useFigureStore();
+const printerStore = usePrinterStore();
 
 onMounted(() => {
   figureStore.fetchFigures();
@@ -17,29 +16,21 @@ onMounted(() => {
 
 // Запуск печати
 function handleStartPrinting(printerId: string) {
-  startPrinting(printerId);
+  printerStore.startPrinting(printerId);
+  figureStore.fetchFigures();
 }
 
 // Остановка печати
 function handleStopPrinting(printerId: string) {
-  stopPrinting(printerId);
+  printerStore.stopPrinting(printerId);
+  figureStore.fetchFigures();
 }
 
 // Найти принтер по ID из пропсов
 const printer = computed(() =>
-  printers.value.find((p) => p.id === props.id)
+  printerStore.printers.find((p) => p.id === props.id)
 );
 
-if (printer.value && printerStateMap[printer.value.id]?.error) {
-  ElNotification({
-    message: `${printerStateMap[printer.value.id].error}`,
-    type: 'error',
-    customClass: 'message-error',
-    duration: 2000,
-    position: 'bottom-right',
-    showClose: false,
-  });
-}
 </script>
 
 <template>

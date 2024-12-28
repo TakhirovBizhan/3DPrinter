@@ -57,7 +57,7 @@ const isDeleteDisabled = computed(() => {
     <template #footer>
       <div class="footer__card">
         <PrintConfig :id="id" />
-        <PrinterControl :id="id" />
+        <PrinterControl :id="props.id" />
 
         <div v-if="isDeleteDisabled">
           <el-popover placement="top-start" title="Warning!" :width="200" trigger="hover"

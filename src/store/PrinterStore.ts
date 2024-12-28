@@ -201,6 +201,7 @@ export const usePrinterStore = defineStore('printerStore', () => {
         throw new PrintingError(printer.articule, 'Пластик для принтера не выбран');
       }
 
+      const plasticColor = plasticStore.plasticColor(plasticId).value;
       let plasticRemaining = plasticStore.plasticLength(plasticId).value;
       if (plasticRemaining === undefined) {
         throw new PrintingError(printer.articule, 'Невозможно получить длину пластика');
@@ -208,13 +209,15 @@ export const usePrinterStore = defineStore('printerStore', () => {
 
       const totalPerimeter = figure.perimetr;
       const printSpeed = printer.printingSpeed;
-      let progress = 0;
+      const progress = ref(0);
 
       const printInterval = setInterval(async () => {
         // Случайная ошибка (5%)
         if (Math.random() < 0.05) {
           clearInterval(printInterval);
           printer.isPrintStarted = false;
+          progress.value = 0;
+          printer.progress = progress.value;
 
           const errorTypes = ['Обрыв нити', 'Перегрев', 'Отклеилась модель'];
           const randomError = errorTypes[Math.floor(Math.random() * errorTypes.length)];
@@ -224,7 +227,7 @@ export const usePrinterStore = defineStore('printerStore', () => {
             message: printer.error,
             type: 'error',
             customClass: 'message-error',
-            duration: 3000,
+            duration: 2000,
             position: 'bottom-right'
           });
 
@@ -235,15 +238,15 @@ export const usePrinterStore = defineStore('printerStore', () => {
 
         // Обновляем прогресс и расход пластика
         plasticRemaining! -= printSpeed;
-        progress += (printSpeed / totalPerimeter) * 100;
-        printer.progress = progress;
+        progress.value += (printSpeed / totalPerimeter) * 100;
+        printer.progress = progress.value;
 
         // Условия завершения печати
-        if (progress >= 100 || plasticRemaining! <= 0) {
+        if (progress.value >= 100 || plasticRemaining! <= 0) {
           clearInterval(printInterval);
           printer.isPrintStarted = false;
 
-          if (progress >= 100) {
+          if (progress.value >= 100) {
             ElNotification({
               message: `Печать завершена: ${figure.modelName}`,
               customClass: 'message-success',
@@ -251,6 +254,9 @@ export const usePrinterStore = defineStore('printerStore', () => {
               position: 'bottom-right',
               duration: 2000,
             });
+            printer.progress = 0;
+            printer.error = null;
+            figure.color = plasticColor!;
             await figureRep.updateStatus(figureId, 'ready');
             printer.completedModels.push(figureId);
           } else {
@@ -258,7 +264,7 @@ export const usePrinterStore = defineStore('printerStore', () => {
               message: 'Недостаточно пластика для завершения печати!',
               type: 'error',
               customClass: 'message-error',
-              duration: 3000,
+              duration: 2000,
               position: 'bottom-right'
             });
             await figureRep.updateStatus(figureId, 'created');
@@ -280,7 +286,7 @@ export const usePrinterStore = defineStore('printerStore', () => {
         message: printer.error,
         customClass: 'message-error',
         type: 'error',
-        duration: 3000,
+        duration: 2000,
         position: 'bottom-right'
       });
     } finally {
@@ -295,7 +301,7 @@ export const usePrinterStore = defineStore('printerStore', () => {
         message: 'Принтер не найден!',
         type: 'error',
         customClass: 'message-error',
-        duration: 3000,
+        duration: 2000,
         position: 'bottom-right'
       });
       return;
@@ -310,6 +316,9 @@ export const usePrinterStore = defineStore('printerStore', () => {
       }
 
       printer.isPrintStarted = false;
+      printer.progress = 0;
+      printer.error = null;
+      printer.loading = false;
       const figureId = printer.printQueue[0];
       await printerRep.update(printerId, printer);
       await figureRep.updateStatus(figureId, 'created');
@@ -328,7 +337,7 @@ export const usePrinterStore = defineStore('printerStore', () => {
         message: printer.error,
         type: 'error',
         customClass: 'message-error',
-        duration: 3000,
+        duration: 2000,
         position: 'bottom-right'
       });
     } finally {

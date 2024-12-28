@@ -1,9 +1,10 @@
-import { ref, reactive } from 'vue';
+import { reactive } from 'vue';
 import { ElNotification } from 'element-plus';
 import { figureRep } from '@/repositories/FigureRep';
 import { printerRep } from '@/repositories/PrinterRep';
 import { PrintingError } from '@/models/PrintingError';
 import { usePlasticStore } from '@/store/PlasticStore';
+import { usePrinterStore } from '@/store/PrinterStore';
 import type { Printer } from '@/models/Printer';
 
 interface PrinterState {
@@ -14,7 +15,7 @@ interface PrinterState {
 }
 
 export function usePrinter() {
-  const printers = ref<Printer[]>([]);
+  const printerStore = usePrinterStore();
   const printerStateMap = reactive<Record<string, PrinterState>>({});
   const plasticStore = usePlasticStore();
 
@@ -31,11 +32,16 @@ export function usePrinter() {
 
   async function startPrinting(printerId: string) {
     initializePrinterState(printerId);
-    const printer = printers.value.find((p: Printer) => p.id === printerId);
+    const printer = printerStore.printers.find((p: Printer) => p.id === printerId);
     const state = printerStateMap[printerId];
 
     if (!printer) {
-      ElNotification({ message: 'Принтер не найден!', type: 'error', duration: 3000, customClass: 'message-error' });
+      ElNotification({
+        message: 'Принтер не найден!',
+        type: 'error',
+        duration: 3000,
+        customClass: 'message-error'
+      });
       return;
     }
 
@@ -54,6 +60,9 @@ export function usePrinter() {
       if (!figure || figureError) {
         throw new PrintingError(printer.articule, 'Фигура не найдена');
       }
+
+      // Устанавливаем текущую печатаемую модель
+      state.currentFigure = figure.modelName;
 
       if (!printer.plasticId) {
         throw new PrintingError(printer.articule, 'Пластик для принтера не выбран');
@@ -78,9 +87,16 @@ export function usePrinter() {
           state.isPrintStarted = false;
           state.error = 'Ошибка печати: ' + randomPrintError();
 
-          ElNotification({ message: state.error, type: 'error', duration: 3000, customClass: 'message-error' });
+          ElNotification({
+            message: state.error,
+            type: 'error',
+            duration: 3000,
+            customClass: 'message-error'
+          });
+
           printer.isPrintStarted = false;
           state.progress = 0;
+          state.currentFigure = null;  // Сбрасываем текущую фигуру при ошибке
           await figureRep.updateStatus(figureId, 'created');
           await printerRep.update(printerId, printer);
           return;
@@ -100,15 +116,23 @@ export function usePrinter() {
               duration: 2000,
               customClass: 'message-success'
             });
+
             printer.completedModels.push(figureId);
             await figureRep.updateStatus(figureId, 'ready');
           } else {
-            ElNotification({ message: 'Недостаточно пластика для завершения печати!', type: 'error', duration: 3000, customClass: 'message-error' });
+            ElNotification({
+              message: 'Недостаточно пластика для завершения печати!',
+              type: 'error',
+              duration: 3000,
+              customClass: 'message-error'
+            });
+
             await figureRep.updateStatus(figureId, 'created');
           }
 
           printer.printQueue.shift();
           state.progress = 0;
+          state.currentFigure = null;  // Сбрасываем после завершения
           printer.isPrintStarted = false;
           await printerRep.update(printerId, printer);
 
@@ -123,7 +147,12 @@ export function usePrinter() {
       }, 1000);
     } catch (err) {
       state.error = err instanceof PrintingError ? err.message : 'Неизвестная ошибка';
-      ElNotification({ message: state.error, type: 'error', duration: 3000, customClass: 'message-error' });
+      ElNotification({
+        message: state.error,
+        type: 'error',
+        duration: 3000,
+        customClass: 'message-error'
+      });
     } finally {
       state.loading = false;
     }
@@ -131,7 +160,7 @@ export function usePrinter() {
 
   async function stopPrinting(printerId: string) {
     initializePrinterState(printerId);
-    const printer = printers.value.find((p) => p.id === printerId);
+    const printer = printerStore.printers.find((p) => p.id === printerId);
     const state = printerStateMap[printerId];
 
     if (!printer) {
@@ -168,9 +197,8 @@ export function usePrinter() {
   }
 
   return {
-    printers,
     printerStateMap,
     startPrinting,
-    stopPrinting,
+    stopPrinting
   };
 }
